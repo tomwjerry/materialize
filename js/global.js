@@ -276,7 +276,11 @@ M.checkPossibleAlignments = function(el, container, bounding, offset) {
     spaceOnTop: null,
     spaceOnRight: null,
     spaceOnBottom: null,
-    spaceOnLeft: null
+    spaceOnLeft: null,
+    overflowTop: null,
+    overflowBottom: null,
+    overflowLeft: null,
+    overflowRight: null
   };
 
   let containerAllowsOverflow = getComputedStyle(container).overflow === 'visible';
@@ -291,38 +295,29 @@ M.checkPossibleAlignments = function(el, container, bounding, offset) {
   let scrolledX = bounding.left - scrollLeft;
   let scrolledYTopEdge = bounding.top - scrollTop;
   let scrolledYBottomEdge = bounding.top + elOffsetRect.height - scrollTop;
-
-  // Check for container and viewport for left
-  canAlign.spaceOnRight = !containerAllowsOverflow
-    ? containerWidth - (scrolledX + bounding.width)
-    : window.innerWidth - (elOffsetRect.left + bounding.width);
-  if (canAlign.spaceOnRight < 0) {
-    canAlign.left = false;
+  
+  // Check for container and viewport for left, right, top, and bottom
+  if (!containerAllowsOverflow) {
+    canAlign.spaceOnRight = containerWidth - scrolledX - bounding.width;
+    canAlign.spaceOnLeft = scrolledX - bounding.width + elOffsetRect.width;
+    canAlign.spaceOnBottom = containerHeight - scrolledYTopEdge - offset;
+    canAlign.overflowBottom = bounding.height - canAlign.spaceOnBottom;
+    canAlign.spaceOnTop = scrolledYBottomEdge + offset;
+    canAlign.overflowTop = bounding.height - canAlign.spaceOnTop;
+  } else {
+    canAlign.spaceOnRight = window.innerWidth - (elOffsetRect.left + bounding.width);
+    canAlign.spaceOnLeft = elOffsetRect.right - bounding.width;
+    canAlign.spaceOnBottom = window.innerHeight - elOffsetRect.top - offset;
+    canAlign.overflowBottom = bounding.height - canAlign.spaceOnBottom;
+    canAlign.spaceOnTop = elOffsetRect.bottom - offset;
+    canAlign.overflowTop = bounding.height - canAlign.spaceOnTop;
   }
-
-  // Check for container and viewport for Right
-  canAlign.spaceOnLeft = !containerAllowsOverflow
-    ? scrolledX - bounding.width + elOffsetRect.width
-    : elOffsetRect.right - bounding.width;
-  if (canAlign.spaceOnLeft < 0) {
-    canAlign.right = false;
-  }
-
-  // Check for container and viewport for Top
-  canAlign.spaceOnBottom = !containerAllowsOverflow
-    ? containerHeight - (scrolledYTopEdge + bounding.height + offset)
-    : window.innerHeight - (elOffsetRect.top + bounding.height + offset);
-  if (canAlign.spaceOnBottom < 0) {
-    canAlign.top = false;
-  }
-
-  // Check for container and viewport for Bottom
-  canAlign.spaceOnTop = !containerAllowsOverflow
-    ? scrolledYBottomEdge - (bounding.height - offset)
-    : elOffsetRect.bottom - (bounding.height + offset);
-  if (canAlign.spaceOnTop < 0) {
-    canAlign.bottom = false;
-  }
+  
+  //If the bounding box would not be cut off, then it can be aligned in that position.
+  canAlign.left = canAlign.spaceOnRight >= 0;
+  canAlign.right = canAlign.spaceOnLeft >= 0;
+  canAlign.top = canAlign.overflowBottom <= 0;
+  canAlign.bottom = canAlign.overflowTop <= 0;
 
   return canAlign;
 };
