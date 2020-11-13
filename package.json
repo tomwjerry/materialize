@@ -1,5 +1,5 @@
 {
-  "name": "materialize-css",
+  "name": "@materializecss/materialize",
   "description": "Builds Materialize distribution packages",
   "author": "Alvin Wang, Alan Chang",
   "homepage": "http://materializecss.com/",
@@ -10,14 +10,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Dogfalo/materialize.git"
+    "url": "git://github.com/materializecss/materialize.git"
   },
   "bugs": {
-    "url": "https://github.com/Dogfalo/materialize/issues"
+    "url": "https://github.com/materializecss/materialize/issues"
   },
   "scripts": {
     "dev": "grunt monitor",
     "test": "grunt travis",
+    "release": "grunt release",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -54,9 +55,9 @@
     "jasmine": "^2.6.0",
     "jasmine-jquery": "^2.1.1",
     "jquery": "^3.2.1",
-    "lint-staged": "^7.0.4",
+    "lint-staged": "^7.0.5",
     "node-archiver": "^0.3.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.14.1",
     "phantomjs-prebuilt": "^2.1.14",
     "prettier": "^1.12.1"
   },

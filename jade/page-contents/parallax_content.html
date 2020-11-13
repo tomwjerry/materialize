@@ -23,13 +23,17 @@
         <pre><code class="language-javascript">
   document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.parallax');
-    var instances = M.Parallax.init(elems, options);
+    var instances = M.Parallax.init(elems, {
+      // specify options here
+    });
   });
 
   // Or with jQuery
 
   $(document).ready(function(){
-    $('.parallax').parallax();
+    $('.parallax').parallax({
+      // specify options here
+    });
   });
         </code></pre>
       </div>
@@ -143,7 +147,7 @@ instance.destroy();
               <a href="#introduction">Introduction</a>
             </li>
             <li>
-              <a href="#initialization">Intialization</a>
+              <a href="#initialization">Initialization</a>
             </li>
             <li>
               <a href="#options">Options</a>

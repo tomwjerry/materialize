@@ -29,13 +29,17 @@
         <pre><code class="language-javascript">
   document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.tooltipped');
-    var instances = M.Tooltip.init(elems, options);
+    var instances = M.Tooltip.init(elems, {
+      // specify options here
+    });
   });
 
   // Or with jQuery
 
   $(document).ready(function(){
-    $('.tooltipped').tooltip();
+    $('.tooltipped').tooltip({
+      // specify options here
+    });
   });
         </code></pre>
       </div>
@@ -83,6 +87,12 @@
               <td>Number</td>
               <td>300</td>
               <td>Enter transition duration.</td>
+            </tr>
+            <tr>
+              <td>opacity</td>
+              <td>Number</td>
+              <td>1</td>
+              <td>Opacity of the tooltip.</td>
             </tr>
             <tr>
               <td>outDuration</td>

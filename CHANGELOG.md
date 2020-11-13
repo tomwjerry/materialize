@@ -3,7 +3,7 @@ Changelog
 Bolded styling surrounded by emojis indicates a breaking change.
 
 ## 1.0.0 (September 9th, 2018)
-- [Full Changelog here](https://github.com/Dogfalo/materialize/blob/v1-dev/v1-changelog.md)
+- [Full Changelog here](https://github.com/materializecss/materialize/blob/v1-dev/v1-changelog.md)
 
 ## 1.0.0-rc.2 (June 23rd, 2018)
 - Autocomplete
@@ -16,7 +16,7 @@ Bolded styling surrounded by emojis indicates a breaking change.
   - Now correctly removes all event listeners on destroy
 
 - Materialbox
-  - Destroy now removed wrapper element added during intialization
+  - Destroy now removed wrapper element added during initialization
 
 - Pushpin
   - Fixed bug on IE11 where class was not removed properly
@@ -176,7 +176,7 @@ Bolded styling surrounded by emojis indicates a breaking change.
 
 - Datepicker
   - Fixed date format option
-  - Scrollbar no longer unecessarily appears when using datepicker
+  - Scrollbar no longer unnecessarily appears when using datepicker
   - Fixed bug where using month and year selectors didn't change date
 
 - Dropdown

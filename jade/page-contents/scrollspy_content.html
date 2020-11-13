@@ -30,7 +30,7 @@
       &lt;ul class="section table-of-contents">
         &lt;li>&lt;a href="#introduction">Introduction&lt;/a>&lt;/li>
         &lt;li>&lt;a href="#structure">Structure&lt;/a>&lt;/li>
-        &lt;li>&lt;a href="#initialization">Intialization&lt;/a>&lt;/li>
+        &lt;li>&lt;a href="#initialization">Initialization&lt;/a>&lt;/li>
       &lt;/ul>
     &lt;/div>
   &lt;/div>
@@ -42,13 +42,17 @@
         <pre><code class="language-javascript">
   document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.scrollspy');
-    var instances = M.ScrollSpy.init(elems, options);
+    var instances = M.ScrollSpy.init(elems, {
+      // specify options here
+    });
   });
 
   // Or with jQuery
 
   $(document).ready(function(){
-    $('.scrollspy').scrollSpy();
+    $('.scrollspy').scrollSpy({
+      // specify options here
+    });
   });
         </code></pre>
         <br>
@@ -174,7 +178,7 @@ instance.destroy();
               <a href="#introduction">Introduction</a>
             </li>
             <li>
-              <a href="#initialization">Intialization</a>
+              <a href="#initialization">Initialization</a>
             </li>
             <li>
               <a href="#options">Options</a>

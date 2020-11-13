@@ -549,11 +549,10 @@ module.exports = function(grunt) {
       }
     },
 
-    // Text Replace
+    // Replace text to update the version string
     replace: {
       version: {
-        // Does not edit README.md
-        src: ['bower.json', 'package.json', 'package.js', 'jade/**/*.html'],
+        src: ['bower.json', 'package.js', 'jade/**/*.html'],
         overwrite: true,
         replacements: [
           {
@@ -562,14 +561,13 @@ module.exports = function(grunt) {
           }
         ]
       },
-      readme: {
-        // Changes README.md
-        src: ['README.md'],
+      package_json: {
+        src: ['package.json'],
         overwrite: true,
         replacements: [
           {
-            from: 'Current Version : v' + grunt.option('oldver'),
-            to: 'Current Version : v' + grunt.option('newver')
+            from: '"version": "' + grunt.option('oldver'),
+            to: '"version": "' + grunt.option('newver')
           }
         ]
       }
@@ -583,7 +581,7 @@ module.exports = function(grunt) {
           banner:
             '/*!\n * Materialize v' +
             grunt.option('newver') +
-            ' (http://materializecss.com)\n * Copyright 2014-2017 Materialize\n * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)\n */',
+            ' (http://materializecss.com)\n * Copyright 2014-2017 Materialize\n * MIT License (https://raw.githubusercontent.com/materializecss/materialize/master/LICENSE)\n */',
           linebreak: true
         },
         files: {
@@ -648,7 +646,7 @@ module.exports = function(grunt) {
     'compress:starter_template',
     'compress:parallax_template',
     'replace:version',
-    'replace:readme',
+    'replace:package_json',
     'rename:rename_src',
     'rename:rename_compiled',
     'clean:temp'
