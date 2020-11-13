@@ -1,14 +1,14 @@
 describe("Dropdown Plugin", function () {
   beforeEach(function() {
-    loadFixtures('dropdown/dropdownFixture.html');
-    $('.dropdown-trigger').dropdown();
+    //nothing common between all yet
   });
 
-  describe("Dropdown", function () {
+  describe("Dropdown basic functions", function () {
     var normalDropdown;
 
     beforeEach(function() {
-      // browserSelect = $('select.normal');
+      loadFixtures('dropdown/dropdownFixture.html');
+      $('.dropdown-trigger').dropdown();
     });
 
     it("should open and close programmatically", function (done) {
@@ -79,6 +79,94 @@ describe("Dropdown Plugin", function () {
       setTimeout(function() {
         done();
       }, 400);
+    });
   });
+
+  fdescribe("Dropdown options and positioning", function () {
+
+    beforeEach(function() {
+      loadFixtures('dropdown/dropdownFixtureAdvanced.html');
+      $('.dropdown-trigger').dropdown({hover: true});
+    });
+
+    it("should cover trigger element when coverTrigger is true", function(done){
+      target = $('#test-1');
+      trigger = M.Dropdown.getInstance(target).el
+      dropdown = M.Dropdown.getInstance(target).dropdownEl;
+      target.dropdown({hover: true, coverTrigger: true})
+      mouseenter(target[0]);
+      setTimeout(function(){
+        expect(dropdown).toBeVisible("because the mouse is hovering");
+        expect(dropdown.offsetTop >= trigger.offsetTop && dropdown.offsetTop < (trigger.offsetTop + 10) ).toBeTruthy("because it should be close to the top of the trigger");
+        done()
+      }, 200);
+    });
+
+    it("should not cover trigger element when coverTrigger is false", function(done){
+      target = $('#test-1');
+      trigger = M.Dropdown.getInstance(target).el
+      dropdown = M.Dropdown.getInstance(target).dropdownEl;
+      target.dropdown({hover: true, coverTrigger: false})
+      mouseenter(target[0]);
+      setTimeout(function(){
+        expect(dropdown).toBeVisible("because the mouse is hovering");
+        expect(dropdown.offsetTop >= (trigger.offsetTop + 72) ).toBeTruthy("because it should be positioned below the trigger");
+        done()
+      }, 200);
+    });
+    
+    it("should cover trigger element when coverTrigger is true and alignment is bottom", function(done){
+      pending("not implemented")
+      done()
+    });
+    it("should not cover trigger element when coverTrigger is false and alignment is bottom", function(done){
+      pending("not implemented")
+      done()
+    });
+    it("should be wide as the content when constrainWidth is false", function(done){
+      pending("not implemented")
+      done()
+    });
+    it("should be scrollable when the list is long and the content overflows", function(done){
+      pending("not implemented")
+      done()
+    });
+  });
+
+  describe("Function inside modal content", function(){
+    it("should cover trigger element when coverTrigger is true", function(done){
+      pending("not implemented")
+      done()
+    });
+    it("should not cover trigger element when coverTrigger is false", function(done){
+      pending("not implemented")
+      done()
+    });
+    it("should cover trigger element when coverTrigger is true and alignment is bottom", function(done){
+      pending("not implemented")
+      done()
+    });
+    it("should not cover trigger element when coverTrigger is false and alignment is bottom", function(done){
+      pending("not implemented")
+      done()
+    });
+    describe("and container is body", function(){
+      it("should cover trigger element when coverTrigger is true", function(done){
+        pending("not implemented")
+        done()
+      });
+      it("should not cover trigger element when coverTrigger is false", function(done){
+        pending("not implemented")
+        done()
+      });
+      it("should cover trigger element when coverTrigger is true and alignment is bottom", function(done){
+        pending("not implemented")
+        done()
+      });
+      it("should not cover trigger element when coverTrigger is false and alignment is bottom", function(done){
+        pending("not implemented")
+        done()
+      });
+    });
   });
 });

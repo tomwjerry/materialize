@@ -555,8 +555,8 @@
       
       this._moveDropdown(closestOverflowParent);
       
-      let closestModal = M.getClosestAncestor(this.el, (ancestor) => {
-        return $(ancestor).hasClass('modal');
+      let closestZ = M.getClosestAncestor(this.el, (ancestor) => {
+        return $(ancestor).css('z-index') !== "auto";
       })
 
       // Set width before calculating positionInfo
@@ -573,8 +573,8 @@
       this.dropdownEl.style.transformOrigin = `${
         positionInfo.horizontalAlignment === 'left' ? '0' : '100%'
       } ${positionInfo.verticalAlignment === 'top' ? '0' : '100%'}`;
-      if (closestModal) {
-        this.dropdownEl.style.zIndex = parseInt(closestModal.style.zIndex) + 1;
+      if (closestZ) {
+        this.dropdownEl.style.zIndex = parseInt(closestZ.style.zIndex) + 1;
       }
     }
 

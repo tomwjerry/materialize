@@ -15,7 +15,13 @@ module.exports = function(grunt) {
           styles: 'bin/materialize.css',
           specs: 'tests/spec/**/*Spec.js',
           helpers: 'tests/spec/helper.js',
-          keepRunner: true
+          keepRunner: true,
+          page: {
+            viewportSize: {
+                width: 1400,
+                height: 735
+            }
+          }
           //helpers: 'test/spec/*.js'
         }
       }
@@ -668,4 +674,5 @@ module.exports = function(grunt) {
   grunt.registerTask('server', ['browserSync', 'notify:server']);
   grunt.registerTask('monitor', ['concurrent:monitor']);
   grunt.registerTask('travis', ['js_compile', 'sass_compile', 'jasmine']);
+  grunt.registerTask('jas_test', ['jasmine']);
 };

@@ -1,7 +1,7 @@
 describe("Autocomplete Plugin", function () {
-  beforeEach(function (done) {
+  beforeEach(function(done) {
     loadFixtures('autocomplete/autocompleteFixture.html');
-    setTimeout(function () {
+    setTimeout(function() {
       $('input.autocomplete').autocomplete({
         data: {
           "Apple": null,
@@ -23,10 +23,10 @@ describe("Autocomplete Plugin", function () {
     it("should work with multiple initializations", function (done) {
       var $normal = $('#normal-autocomplete');
       var $parent = $normal.parent();
-      setTimeout(function () {
-        $normal.autocomplete({ data: { "hi": null } });
-        $normal.autocomplete({ data: { "hi": null } });
-        $normal.autocomplete({ data: { "hi": null } });
+      setTimeout(function() {
+        $normal.autocomplete({data: { "hi": null }});
+        $normal.autocomplete({data: { "hi": null }});
+        $normal.autocomplete({data: { "hi": null }});
         $normal.autocomplete({
           data: {
             "Apple": null,
@@ -59,8 +59,8 @@ describe("Autocomplete Plugin", function () {
       $limited.val('a');
       keyup($limited[0], 65);
 
-      var $autocompleteEl = $limited.parent().find('.autocomplete-content');
-      setTimeout(function () {
+      setTimeout(function() {
+        var $autocompleteEl = $(M.Autocomplete.getInstance($limited[0]).container);
         expect($autocompleteEl.children().length).toEqual(20, 'Results should be at max the set limit');
         done();
       }, 200);
