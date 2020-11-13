@@ -8,7 +8,19 @@
     minLength: 1, // Min characters before autocomplete starts
     sortFunction: function(a, b, inputString) {
       // Sort function for sorting autocomplete results
-      return a.indexOf(inputString) - b.indexOf(inputString);
+      // Must handle situations where input string may not be in a or b
+      if (a.indexOf(inputString) == -1 && b.indexOf(inputString) == -1) {
+        return 0;
+      } else if (a.indexOf(inputString) == -1) {
+        return 1;
+      } else if (b.indexOf(inputString) == -1) {
+        return -1;
+      } else {
+        return a.indexOf(inputString) - b.indexOf(inputString);
+      }
+    },
+    filterFunction: function(key, inputString) {
+      return key.toLowerCase().indexOf(inputString) !== -1;
     }
   };
 
@@ -290,9 +302,17 @@
           .toLowerCase()
           .indexOf('' + string.toLowerCase() + ''),
         matchEnd = matchStart + string.length - 1,
-        beforeMatch = $el.text().slice(0, matchStart),
-        matchText = $el.text().slice(matchStart, matchEnd + 1),
+        beforeMatch = '',
+        matchText = '',
+        afterMatch = '';
+      //custom filters may return results where the string does not match
+      if (matchStart == -1 || matchEnd == -1) {
+        beforeMatch = $el.text();
+      } else {
+        beforeMatch = $el.text().slice(0, matchStart);
+        matchText = $el.text().slice(matchStart, matchEnd + 1);
         afterMatch = $el.text().slice(matchEnd + 1);
+      }
       $el.html(
         `<span>${beforeMatch}<span class='highlight'>${matchText}</span>${afterMatch}</span>`
       );
@@ -349,7 +369,12 @@
 
       // Gather all matching data
       for (let key in data) {
-        if (data.hasOwnProperty(key) && key.toLowerCase().indexOf(val) !== -1) {
+        if (data.hasOwnProperty(key) && this.options.filterFunction(key, val)) {
+          // Break if past limit
+          if (this.count >= this.options.limit) {
+            break;
+          }
+
           let entry = {
             data: data[key],
             key: key
