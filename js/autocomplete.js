@@ -292,9 +292,17 @@
           .toLowerCase()
           .indexOf('' + string.toLowerCase() + ''),
         matchEnd = matchStart + string.length - 1,
-        beforeMatch = $el.text().slice(0, matchStart),
-        matchText = $el.text().slice(matchStart, matchEnd + 1),
+        beforeMatch = '',
+        matchText = '',
+        afterMatch = '';
+      //custom filters may return results where the string does not match
+      if (matchStart == -1 || matchEnd == -1) {
+        beforeMatch = $el.text();
+      } else {
+        beforeMatch = $el.text().slice(0, matchStart);
+        matchText = $el.text().slice(matchStart, matchEnd + 1);
         afterMatch = $el.text().slice(matchEnd + 1);
+      }
       $el.html(
         `<span>${beforeMatch}<span class='highlight'>${matchText}</span>${afterMatch}</span>`
       );
