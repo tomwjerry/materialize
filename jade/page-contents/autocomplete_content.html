@@ -5,7 +5,8 @@
 
       <div id="introduction" class="section scrollspy">
         <p class="caption">
-          Add an autocomplete dropdown below your input to suggest possible values in your form. You can populate the list of autocomplete
+          Add an autocomplete dropdown below your input to suggest possible values in your form. You can populate the
+          list of autocomplete
           options dynamically as well.
         </p>
 
@@ -116,39 +117,53 @@
         <h5 class="method-header">
           sortFunction
         </h5>
-        <p>This is the default compareFunction. You can write your own compareFunction by passing in a function with these same
+        <p>This is the default compareFunction. You can write your own compareFunction by passing in a function with
+          these same
           3 parameters. You can read more about how a compareFunction works
-          <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort">here</a>.</p>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort">here</a>.
+        </p>
         <pre><code class="language-javascript col s12">
-  // Sort function for sorting autocomplete results
   function (a, b, inputString) {
-    return a.indexOf(inputString) - b.indexOf(inputString);
+    // Sort function for sorting autocomplete results
+    // Must handle situations where input string may not be in a or b
+    if (a.indexOf(inputString) == -1 && b.indexOf(inputString) == -1) {
+      return 0
+    } else if (a.indexOf(inputString) == -1) {
+      return 1
+    } else if (b.indexOf(inputString) == -1) {
+      return -1
+    } else {
+      return a.indexOf(inputString) - b.indexOf(inputString);
+    }
   }
         </code></pre>
         <p>To disable sorting and use the values as they appear in the data object, use a falsy value.</p>
       </div>
 
-        <h5 class="method-header">
-          filterFunction
-        </h5>
-        <p>This is the default filter function. You can write your own filter function by passing in a function with the same
-          parameters.
-        <pre><code class="language-javascript col s12">
+      <h5 class="method-header">
+        filterFunction
+      </h5>
+      <p>This is the default filter function. You can write your own filter function by passing in a function with the
+        same
+        parameters.
+      <pre><code class="language-javascript col s12">
   function(key, inputString) {                                                                                                      
     return key.toLowerCase().indexOf(inputString) !== -1;                                                                                           
   }
         </code></pre>
-        <p>To disable sorting and use the values as they appear in the data object, use a falsy value.</p>
-      </div>
+      <p>To disable sorting and use the values as they appear in the data object, use a falsy value.</p>
+    </div>
 
 
 
-      <div id="methods" class="scrollspy section">
-        <h3 class="header">Methods</h3>
-        <blockquote>
-          <p>Because jQuery is no longer a dependency, all the methods are called on the plugin instance. You can get the plugin
-            instance like this: </p>
-          <pre><code class="language-javascript col s12">
+    <div id="methods" class="scrollspy section">
+      <h3 class="header">Methods</h3>
+      <blockquote>
+        <p>Because jQuery is no longer a dependency, all the methods are called on the plugin instance. You can get the
+          plugin
+          instance like this: </p>
+        <pre><code class="language-javascript col s12">
   var instance = M.Autocomplete.getInstance(elem);
 
   /* jQuery Method Calls
@@ -159,140 +174,141 @@
     $('.autocomplete').autocomplete('methodName', paramName);
   */
         </code></pre>
-        </blockquote>
-        <h5 class="method-header">
-          .open();
-        </h5>
-        <p>Open autocomplete dropdown.</p>
-        <pre><code class="language-javascript col s12">
+      </blockquote>
+      <h5 class="method-header">
+        .open();
+      </h5>
+      <p>Open autocomplete dropdown.</p>
+      <pre><code class="language-javascript col s12">
 instance.open();
       </code></pre>
-        <br>
+      <br>
 
-        <h5 class="method-header">
-          .close();
-        </h5>
-        <p>Close autocomplete dropdown.</p>
-        <pre><code class="language-javascript col s12">
+      <h5 class="method-header">
+        .close();
+      </h5>
+      <p>Close autocomplete dropdown.</p>
+      <pre><code class="language-javascript col s12">
 instance.close();
       </code></pre>
-        <br>
+      <br>
 
-        <h5 class="method-header">
-          .selectOption();
-        </h5>
-        <p>Select a specific autocomplete options.</p>
-        <h6>Arguments</h6>
-        <p>
-          <b>Element:</b> Element of the autocomplete option.</p>
-        <pre><code class="language-javascript col s12">
+      <h5 class="method-header">
+        .selectOption();
+      </h5>
+      <p>Select a specific autocomplete options.</p>
+      <h6>Arguments</h6>
+      <p>
+        <b>Element:</b> Element of the autocomplete option.</p>
+      <pre><code class="language-javascript col s12">
 instance.selectOption(el);
       </code></pre>
-        <br>
+      <br>
 
-        <h5 class="method-header">
-          .updateData();
-        </h5>
-        <p>Update autocomplete options data.</p>
-        <h6>Arguments</h6>
-        <p>
-          <b>Object:</b> Autocomplete options data object.</p>
-        <pre><code class="language-javascript col s12">
+      <h5 class="method-header">
+        .updateData();
+      </h5>
+      <p>Update autocomplete options data.</p>
+      <h6>Arguments</h6>
+      <p>
+        <b>Object:</b> Autocomplete options data object.</p>
+      <pre><code class="language-javascript col s12">
 instance.updateData({
   "Apple": null,
   "Microsoft": null,
   "Google": 'https://placehold.it/250x250'
 });
       </code></pre>
-        <br>
+      <br>
 
-        <h5 class="method-header">
-          .destroy();
-        </h5>
-        <p>Destroy plugin instance and teardown</p>
-        <pre><code class="language-javascript col s12">
+      <h5 class="method-header">
+        .destroy();
+      </h5>
+      <p>Destroy plugin instance and teardown</p>
+      <pre><code class="language-javascript col s12">
 instance.destroy();
       </code></pre>
-      </div>
-
-
-
-
-      <div id="properties" class="scrollspy section">
-        <h3 class="header">Properties</h3>
-        <table class="striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>el</td>
-              <td>Element</td>
-              <td>The DOM element the plugin was initialized with.</td>
-            </tr>
-            <tr>
-              <td>options</td>
-              <td>Object</td>
-              <td>The options the instance was initialized with.</td>
-            </tr>
-            <tr>
-              <td>isOpen</td>
-              <td>Boolean</td>
-              <td>If the autocomplete is open.</td>
-            </tr>
-            <tr>
-              <td>count</td>
-              <td>Number</td>
-              <td>Number of matching autocomplete options.</td>
-            </tr>
-            <tr>
-              <td>activeIndex</td>
-              <td>Integer</td>
-              <td>Index of the current selected option.</td>
-            </tr>
-            <tr>
-              <td>dropdown</td>
-              <td>Dropdown</td>
-              <td>Instance of the dropdown plugin for this autocomplete.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-
     </div>
-    <div class="col hide-on-small-only m3 xl3 offset-xl1">
-      <div class="toc-wrapper">
-        <div class="buysellads hide-on-small-only">
-          <!-- CarbonAds Zone Code -->
-          <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CKYIK27J&placement=materializecss" id="_carbonads_js"></script>
-        </div>
-        <div style="height: 1px;">
-          <ul class="section table-of-contents">
-            <li>
-              <a href="#introduction">Introduction</a>
-            </li>
-            <li>
-              <a href="#initialization">Initialization</a>
-            </li>
-            <li>
-              <a href="#options">Options</a>
-            </li>
-            <li>
-              <a href="#methods">Methods</a>
-            </li>
-            <li>
-              <a href="#properties">Properties</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+
+
+
+
+    <div id="properties" class="scrollspy section">
+      <h3 class="header">Properties</h3>
+      <table class="striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>el</td>
+            <td>Element</td>
+            <td>The DOM element the plugin was initialized with.</td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>Object</td>
+            <td>The options the instance was initialized with.</td>
+          </tr>
+          <tr>
+            <td>isOpen</td>
+            <td>Boolean</td>
+            <td>If the autocomplete is open.</td>
+          </tr>
+          <tr>
+            <td>count</td>
+            <td>Number</td>
+            <td>Number of matching autocomplete options.</td>
+          </tr>
+          <tr>
+            <td>activeIndex</td>
+            <td>Integer</td>
+            <td>Index of the current selected option.</td>
+          </tr>
+          <tr>
+            <td>dropdown</td>
+            <td>Dropdown</td>
+            <td>Instance of the dropdown plugin for this autocomplete.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
 
   </div>
+  <div class="col hide-on-small-only m3 xl3 offset-xl1">
+    <div class="toc-wrapper">
+      <div class="buysellads hide-on-small-only">
+        <!-- CarbonAds Zone Code -->
+        <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CKYIK27J&placement=materializecss"
+          id="_carbonads_js"></script>
+      </div>
+      <div style="height: 1px;">
+        <ul class="section table-of-contents">
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#initialization">Initialization</a>
+          </li>
+          <li>
+            <a href="#options">Options</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#properties">Properties</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
 </div>

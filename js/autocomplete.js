@@ -8,7 +8,16 @@
     minLength: 1, // Min characters before autocomplete starts
     sortFunction: function(a, b, inputString) {
       // Sort function for sorting autocomplete results
-      return a.indexOf(inputString) - b.indexOf(inputString);
+      // Must handle situations where input string may not be in a or b
+      if (a.indexOf(inputString) == -1 && b.indexOf(inputString) == -1) {
+        return 0;
+      } else if (a.indexOf(inputString) == -1) {
+        return 1;
+      } else if (b.indexOf(inputString) == -1) {
+        return -1;
+      } else {
+        return a.indexOf(inputString) - b.indexOf(inputString);
+      }
     },
     filterFunction: function(key, inputString) {
       return key.toLowerCase().indexOf(inputString) !== -1;

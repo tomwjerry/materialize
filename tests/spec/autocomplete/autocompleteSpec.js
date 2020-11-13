@@ -1,7 +1,7 @@
 describe("Autocomplete Plugin", function () {
-  beforeEach(function(done) {
+  beforeEach(function (done) {
     loadFixtures('autocomplete/autocompleteFixture.html');
-    setTimeout(function() {
+    setTimeout(function () {
       $('input.autocomplete').autocomplete({
         data: {
           "Apple": null,
@@ -23,10 +23,10 @@ describe("Autocomplete Plugin", function () {
     it("should work with multiple initializations", function (done) {
       var $normal = $('#normal-autocomplete');
       var $parent = $normal.parent();
-      setTimeout(function() {
-        $normal.autocomplete({ data: {"hi": null} });
-        $normal.autocomplete({ data: {"hi": null} });
-        $normal.autocomplete({ data: {"hi": null} });
+      setTimeout(function () {
+        $normal.autocomplete({ data: { "hi": null } });
+        $normal.autocomplete({ data: { "hi": null } });
+        $normal.autocomplete({ data: { "hi": null } });
         $normal.autocomplete({
           data: {
             "Apple": null,
@@ -60,12 +60,13 @@ describe("Autocomplete Plugin", function () {
       keyup($limited[0], 65);
 
       var $autocompleteEl = $limited.parent().find('.autocomplete-content');
-      setTimeout(function() {
+      setTimeout(function () {
         expect($autocompleteEl.children().length).toEqual(20, 'Results should be at max the set limit');
         done();
       }, 200);
 
     });
+
     it("should filter results", function (done) {
       var $normal = $('#normal-autocomplete');
       var $parent = $normal.parent();
@@ -75,8 +76,73 @@ describe("Autocomplete Plugin", function () {
       $normal.val('e');
       keyup($normal[0], 69);
 
-      setTimeout(function() {
+      setTimeout(function () {
         expect($autocompleteEl.children().length).toEqual(2, 'Results containing e should return.');
+        done();
+      }, 200);
+    });
+
+    it("should display the correct text", function (done) {
+      var $normal = $('#normal-autocomplete');
+      var $parent = $normal.parent();
+      $normal.autocomplete({
+        data: {
+          "Apple": null,
+          "Microsoft": null,
+          "Google": 'http://placehold.it/250x250'
+        },
+        // don't filter anything.
+        filterFunction: function (key_string, filter_string) {
+          // each record is passed through this function
+          // if false record is not displayed.
+          return true
+        }
+      });
+      var $autocompleteEl = $normal.parent().find('.autocomplete-content');
+
+      $normal.focus();
+      $normal.val('e');
+      keyup($normal[0], 69);
+
+      var labels = ["Apple", "Microsoft", "Google"];
+
+      setTimeout(function () {
+        for (i = 0; i < $autocompleteEl.children().length; i++) {
+          var found = labels.indexOf($autocompleteEl.children()[i].innerText.trim())
+          expect(found).toBeGreaterThan(-1, 'results should be in the initialized data')
+        }
+        done();
+      }, 200);
+    });
+
+    it("should sort results with matches at the top", function (done) {
+      var $normal = $('#normal-autocomplete');
+      var $parent = $normal.parent();
+      $normal.autocomplete({
+        data: {
+          "Apple": null,
+          "Microsoft": null,
+          "Google": 'http://placehold.it/250x250'
+        },
+        // don't filter anything.
+        filterFunction: function (key_string, filter_string) {
+          // each record is passed through this function
+          // if false record is not displayed.
+          return true
+        }
+      });
+      var $autocompleteEl = $normal.parent().find('.autocomplete-content');
+
+      $normal.focus();
+      $normal.val('mi');
+      keyup($normal[0], 69);
+
+      var labels = ["Microsoft", "Apple", "Google"];
+
+      setTimeout(function () {
+        for (i = 0; i < $autocompleteEl.children().length; i++) {
+          expect($autocompleteEl.children()[i].innerText.trim()).toEqual(labels[i], 'results should be in the correct order')
+        }
         done();
       }, 200);
     });
@@ -84,14 +150,14 @@ describe("Autocomplete Plugin", function () {
     it("should allow for custom filtered results", function (done) {
       var $normal = $('#normal-autocomplete');
       var $parent = $normal.parent();
-      $normal.autocomplete({     
+      $normal.autocomplete({
         data: {
           "Apple": null,
           "Microsoft": null,
           "Google": 'http://placehold.it/250x250'
         },
         // don't filter anything.
-        filterFunction: function(key_string,filter_string) {
+        filterFunction: function (key_string, filter_string) {
           // each record is passed through this function
           // if false record is not displayed.
           return true
@@ -103,7 +169,7 @@ describe("Autocomplete Plugin", function () {
       $normal.val('foo');
       keyup($normal[0], 69);
 
-      setTimeout(function() {
+      setTimeout(function () {
         expect($autocompleteEl.children().length).toEqual(3, 'All rows should return.');
         done();
       }, 200);
@@ -119,14 +185,14 @@ describe("Autocomplete Plugin", function () {
         "Microsoft": null,
         "Google": 'https://placehold.it/250x250',
         "Oracle": null
-        }); 
+      });
       var $autocompleteEl = $normal.parent().find('.autocomplete-content');
 
       $normal.focus();
       $normal.val('e');
       keyup($normal[0], 69);
 
-      setTimeout(function() {
+      setTimeout(function () {
         expect($autocompleteEl.children().length).toEqual(3, 'should return updated result set.');
         done();
       }, 200);
@@ -141,13 +207,13 @@ describe("Autocomplete Plugin", function () {
       $normal.val('e');
       keyup($normal[0], 69);
 
-      setTimeout(function() {
+      setTimeout(function () {
         expect($autocompleteEl.children().length).toEqual(2, 'Results should show dropdown on text input');
         done();
       }, 200);
     });
 
-  it("should open correctly from keyboard focus", function (done) {
+    it("should open correctly from keyboard focus", function (done) {
       var $normal = $('#normal-autocomplete');
       var $parent = $normal.parent();
       var $autocompleteEl = $normal.parent().find('.autocomplete-content');
@@ -156,7 +222,7 @@ describe("Autocomplete Plugin", function () {
       keyup($normal[0], 9);
       focus($normal[0]);
 
-      setTimeout(function() {
+      setTimeout(function () {
         expect($autocompleteEl.children().length).toEqual(2, 'Results should show dropdown on text input');
         done();
       }, 200);
