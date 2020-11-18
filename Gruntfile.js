@@ -612,7 +612,27 @@ module.exports = function(grunt) {
           ignore: true
         }
       }
+    },
+
+    connect: {
+      server: {
+        options: {
+          port: 9001,
+          protocol: 'http',
+          middleware: function(connect, options, middlewares) {
+            middlewares.unshift(function(req, res, next){
+              res.setHeader('Access-Control-Allow-Origin', '*');
+              res.setHeader('Access-Control-Allow-Credentials', true);
+              res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+              res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+              next();
+            });
+            return middlewares
+          }           
+        }
+      }
     }
+
   };
 
   grunt.initConfig(config);
@@ -635,6 +655,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-babel');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   // define the tasks
   grunt.registerTask('release', [
@@ -674,5 +695,5 @@ module.exports = function(grunt) {
   grunt.registerTask('server', ['browserSync', 'notify:server']);
   grunt.registerTask('monitor', ['concurrent:monitor']);
   grunt.registerTask('travis', ['js_compile', 'sass_compile', 'jasmine']);
-  grunt.registerTask('jas_test', ['jasmine']);
+  grunt.registerTask('jas_test', ['connect', 'jasmine']);
 };

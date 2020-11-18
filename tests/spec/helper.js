@@ -1,4 +1,4 @@
-jasmine.getFixtures().fixturesPath = 'tests/spec';
+jasmine.getFixtures().fixturesPath = 'http://localhost:9001/tests/spec';
 
 beforeEach(function() {
 
