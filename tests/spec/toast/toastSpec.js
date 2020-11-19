@@ -6,19 +6,19 @@ describe( 'Toasts:', function() {
   describe('Toast javascript functions', function() {
     // Toast out animation duration does not count as part of its timer.
     it('should display and remove a toast', function(done) {
-      M.toast({html: 'Test toast', displayLength: toastInDuration});
+      M.toast({html: 'Test toast', displayLength: toastInDuration, classes: 'toast-id-2'});
 
       setTimeout(function() {
-        toast = $('.toast');
+        toast = $('.toast-id-2');
         expect(toast.length).toBe(1);
         expect(toast).toBeVisible();
         expect(toast.text()).toBe('Test toast');
         setTimeout(function() {
-          toast = $('.toast');
+          toast = $('.toast-id-2');
           expect(toast).toBeVisible();
           expect(toast.length).toBe(1, 'because toast duration still on going');
           setTimeout(function() {
-            toast = $('.toast');
+            toast = $('.toast-id-2');
             expect(toast.length).toBe(0, 'because toast should be removed by now');
             done();
           }, toastOutDuration + 90); // .1s leeway is given
@@ -28,8 +28,9 @@ describe( 'Toasts:', function() {
 
     it('Opens a toast with HTML content', function() {
       var $toastContent = $('<span>I am toast content</span>');
-      M.toast({html: $toastContent, displayLength: 400});
-      toast = $('.toast');
+      //Use custom class to identify toast so it's not confused by previous test toasts still hanging around.
+      M.toast({html: $toastContent, displayLength: 400, classes: 'toast-id-1'});
+      toast = $('.toast-id-1');
       expect(toast.first('span').text()).toBe('I am toast content');
       expect(toast.first('span').text()).not.toBe('I am toast');
     });

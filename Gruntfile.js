@@ -694,6 +694,16 @@ module.exports = function(grunt) {
   ]);
   grunt.registerTask('server', ['browserSync', 'notify:server']);
   grunt.registerTask('monitor', ['concurrent:monitor']);
-  grunt.registerTask('travis', ['js_compile', 'sass_compile', 'jasmine']);
+  grunt.registerTask('travis', ['js_compile', 'sass_compile', 'connect', 'jasmine']);
   grunt.registerTask('jas_test', ['connect', 'jasmine']);
+  grunt.registerTask('test_repeat', function(){
+    const tasks = ['connect'];
+    const n = 10;
+    for (let i = 0; i < n; i++) {
+      tasks.push('jasmine');
+    }
+
+    grunt.task.run(tasks);
+
+  });
 };

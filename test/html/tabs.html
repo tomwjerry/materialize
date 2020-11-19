@@ -5,26 +5,43 @@
 
   <title>Materialize - Documentation</title>
 
-  <!-- Favicons -->
-  <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
-  <meta name="msapplication-TileColor" content="#FFFFFF">
-  <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
-  <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
-
   <!-- Android 5 Chrome Color -->
   <meta name="theme-color" content="#EE6E73">
 
-  <link href="../../../bin/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="../../bin/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--  <link href="css/ghpages-materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />-->
 <!--  <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>-->
-  <link href="../../../css/prism.css" rel="stylesheet" />
+  <link href="../../css/prism.css" rel="stylesheet" />
 </head>
 
 <body>
 
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs normal">
+        <li class="tab col s3"><a href="#test1">Test 1</a></li>
+        <li class="tab col s3"><a class="active" href="#test2">Test 2</a></li>
+        <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>
+        <li class="tab col s3"><a href="#test4">Test 4</a></li>
+        <li class="tab col s3"><a href="#test5">Test 4</a></li>
+        <li class="tab col s3"><a href="#test6">Test 4</a></li>
+        <li class="tab col s3"><a href="#test7">Test 4</a></li>
+        <li class="tab col s3"><a href="#test8">Test 4</a></li>
+      </ul>
+    </div>
+    <div id="test1" class="col s12">Test 1</div>
+    <div id="test2" class="col s12">Test 2</div>
+    <div id="test3" class="col s12">Test 3</div>
+    <div id="test4" class="col s12">Test 4</div>
+    <div id="test5" class="col s12">Test 1</div>
+    <div id="test6" class="col s12">Test 2</div>
+    <div id="test7" class="col s12">Test 3</div>
+    <div id="test8" class="col s12">Test 4</div>
+  </div>
 
-  <h3>Variable Width</h3>
+
+  <!-- <h3>Variable Width</h3>
   <div class="row">
     <div class="col s12 no-padding">
       <ul class="tabs">
@@ -93,19 +110,20 @@
   <div id="test9" class="col s12">Test 1</div>
   <div id="test10" class="col s12">Test 2</div>
   <div id="test11" class="col s12">Test 3</div>
-  <div id="test12" class="col s12">Test 4</div>
+  <div id="test12" class="col s12">Test 4</div> -->
 
 <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="../../../bin/materialize.js"></script>
-<!--     <script src="js/velocity.min.js"></script>-->
-<!--  <script src="js/leanModal.js"></script>-->
-    <script type="text/javascript">
-    $( document ).ready(function() {
-      $('.tabs').tabs();
-      $('.sidenav').sidenav();
-    });
-    </script>
+  <script src="../../bin/materialize.js"></script>
+  <script type="text/javascript">
+  $('ul.tabs').tabs();
+  var normalTabs;
+  normalTabs = $('.tabs.normal');
+    // $( document ).ready(function() {
+    //   $('.tabs').tabs();
+    //   $('.sidenav').sidenav();
+    // });
+  </script>
 
 </body>
 </html>

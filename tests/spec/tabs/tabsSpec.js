@@ -10,6 +10,8 @@ describe("Tabs Plugin", function () {
     beforeEach(function() {
       normalTabs = $('.tabs.normal');
       window.location.hash = "";
+      //HACK Why is jasmine not resetting tabs in between when calling loadFixtures?
+      normalTabs.tabs('select', 'test2')
     });
 
     it("should open to active tab", function () {
