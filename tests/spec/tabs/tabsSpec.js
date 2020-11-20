@@ -1,22 +1,20 @@
 describe("Tabs Plugin", function () {
-  beforeEach(function() {
-    loadFixtures('tabs/tabsFixture.html');
-    $('ul.tabs').tabs();
-  });
 
   describe("Tabs", function () {
     var normalTabs;
-
-    beforeEach(function() {
+    beforeEach(async function() {
+      await XloadFixtures(['tabs/tabsFixture.html']);
       normalTabs = $('.tabs.normal');
+      tabEl = document.getElementById("normal-tabs");
+      M.Tabs.init(tabEl, {});
       window.location.hash = "";
-      //HACK Why is jasmine not resetting tabs in between when calling loadFixtures?
+      //HACK the tabs init function not fully initializing. it restores state even after element has been removed from DOM, even after using tabInstance.destroy()
       normalTabs.tabs('select', 'test2')
     });
 
     it("should open to active tab", function () {
-      var activeTab = normalTabs.find('.active');
-      var activeTabHash = activeTab.attr('href');
+      const activeTab = normalTabs.find('.active');
+      const activeTabHash = activeTab.attr('href');
       normalTabs.find('.tab a').each(function() {
         var tabHash = $(this).attr('href');
         if (tabHash === activeTabHash) {
@@ -32,13 +30,13 @@ describe("Tabs Plugin", function () {
     });
 
     it("should switch to clicked tab", function (done) {
-      var activeTab = normalTabs.find('.active');
-      var activeTabHash = activeTab.attr('href');
-      var disabledTab = normalTabs.find('.disabled a');
-      var disabledTabHash = disabledTab.attr('href');
-      var firstTab = normalTabs.find('.tab a').first();
-      var firstTabHash = firstTab.attr('href');
-      var indicator = normalTabs.find('.indicator');
+      const activeTab = normalTabs.find('.active');
+      const activeTabHash = activeTab.attr('href');
+      const disabledTab = normalTabs.find('.disabled a');
+      const disabledTabHash = disabledTab.attr('href');
+      const firstTab = normalTabs.find('.tab a').first();
+      const firstTabHash = firstTab.attr('href');
+      const indicator = normalTabs.find('.indicator');
 
       expect(indicator).toExist('Indicator should be generated');
       // expect(Math.abs(indicator.offset().left - activeTab.offset().left)).toBeLessThan(1, 'Indicator should be at active tab by default.');
@@ -62,9 +60,9 @@ describe("Tabs Plugin", function () {
     });
 
     it("shouldn't hide active tab if clicked while active", function (done) {
-      var activeTab = normalTabs.find('.active');
-      var activeTabHash = activeTab.attr('href');
-      var indicator = normalTabs.find('.indicator');
+      const activeTab = normalTabs.find('.active');
+      const activeTabHash = activeTab.attr('href');
+      const indicator = normalTabs.find('.indicator');
 
       expect(indicator).toExist('Indicator should be generated');
 
@@ -78,7 +76,7 @@ describe("Tabs Plugin", function () {
 
 
     it("should horizontally scroll when too many tabs", function (done) {
-      var tabsScrollWidth = 0;
+      let tabsScrollWidth = 0;
       normalTabs.parent().css('width', '400px');
       normalTabs.find('.tab').each(function() {
         setTimeout(function() {
@@ -93,14 +91,14 @@ describe("Tabs Plugin", function () {
     });
 
     it("should programmatically switch tabs", function (done) {
-      var activeTab = normalTabs.find('.active');
-      var activeTabHash = activeTab.attr('href');
-      var firstTab = normalTabs.find('li a').first();
-      var firstTabHash = firstTab.attr('href');
-      var indicator = normalTabs.find('.indicator');
+      const activeTab = normalTabs.find('.active');
+      const activeTabHash = activeTab.attr('href');
+      const firstTab = normalTabs.find('li a').first();
+      const firstTabHash = firstTab.attr('href');
+      const indicator = normalTabs.find('.indicator');
 
       normalTabs.find('.tab a').each(function() {
-        var tabHash = $(this).attr('href');
+        const tabHash = $(this).attr('href');
         if (tabHash === activeTabHash) {
           expect($(tabHash)).toBeVisible('active tab content should be visible by default');
         } else {
@@ -120,7 +118,7 @@ describe("Tabs Plugin", function () {
 
     it("shouldn't error if tab has no associated content", function (done) {
       $('#test8').remove();
-      var tabNoContent = $('[href="#test8"]').first();
+      const tabNoContent = $('[href="#test8"]').first();
       expect(tabNoContent.hasClass('active')).toEqual(false, 'Tab should not be selected');
       click($('[href="#test8"]')[0]);
 

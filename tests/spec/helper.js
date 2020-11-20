@@ -1,51 +1,45 @@
 jasmine.getFixtures().fixturesPath = 'http://localhost:9001/tests/spec';
+jasmine.getEnv().configure({random: false})
 
-// var fixturesCache = {};
-// var containerId = 'jasmine-fixtures';
-// function loadFixtures() {
-//     //should save and restore the body element, not just the container
-//     var container = document.getElementById(containerId);
-//     if (container) {
-//         container.parentNode.removeChild(container);
-//     }
-//     var htmlChunks = [];
+const fixturesCache = {};
+const containerId = 'xjasmine-fixtures';
+const fixturesPath = 'http://localhost:9001/tests/spec';
 
-//     var fixtureUrls = arguments;
-//     for (var urlCount = fixtureUrls.length, urlIndex = 0; urlIndex < urlCount; urlIndex++) {
-//         url = fixtureUrls[urlIndex];
-//         if (void (0) === fixturesCache[url]) {
-//             var xhr = new window.XMLHttpRequest;
-//             xhr.open('GET', url, false);
-//             xhr.send(null);
-//             var status = xhr.status;
-//             var succeeded = 0 === status || (status >= 200 && status < 300) || 304 == status;
-
-//             if (!succeeded)
-//                 throw new Error('Failed to load resource: status=' + status + ' url=' + url);
-//             fixturesCache[url] = xhr.responseText;
-//         }
-//         htmlChunks.push(fixturesCache[url]);
-//     }
-//     html = htmlChunks.join('');
-//     var container = document.createElement('div');
-//     container.id = this.containerId;
-
-//     if (html && html.nodeType === 1)
-//         container.appendChild(html);
-//     else
-//         container.innerHTML = html;
-
-//     document.body.appendChild(container);
-
-// }
+async function XloadFixtures(fixtureUrls) {
+  // console.log(JSON.stringify(fixturesCache))
+  //should save and restore the body element, not just the container
+  let oldcontainer = document.getElementById(containerId);
+  // console.log("body before clear", document.body.innerHTML);
+  if (oldcontainer) {
+    oldcontainer.parentNode.removeChild(oldcontainer);
+    oldcontainer = null;
+  }
+  // console.log("body after clear", document.body.innerHTML);
+  const htmlChunks = [];
+  for (let i = 0; i < fixtureUrls.length; i++) {
+    const url = fixturesPath + "/" + fixtureUrls[i];
+    if (fixturesCache[url] === undefined) {
+      const response = await fetch(url);
+      fixturesCache[url] = await response.text();
+    }
+    htmlChunks.push(fixturesCache[url]);
+  }
+  const container = document.createElement('div');
+  container.id = containerId;
+  container.innerHTML = htmlChunks.join('');
+  
+  // console.log("body before append", document.body.innerHTML);
+  document.body.appendChild(container);
+  // console.log("body after append", document.body.innerHTML);
+}
 
 
-beforeEach(function() {
+beforeEach(function () {
 
   /**
    * Creates standard click event on DOM element
    */
-  window.click = function(elem) {
+  window.click = function (elem) {
     var evt = document.createEvent('MouseEvent');
     evt.initMouseEvent('click', {
       bubbles: true,
@@ -56,7 +50,7 @@ beforeEach(function() {
     elem.dispatchEvent(evt);
   };
 
-  window.mouseenter = function(el) {
+  window.mouseenter = function (el) {
     var ev = document.createEvent("MouseEvent");
     ev.initMouseEvent(
       "mouseenter",
@@ -69,7 +63,7 @@ beforeEach(function() {
     el.dispatchEvent(ev);
   };
 
-  window.keydown = function(el, keycode) {
+  window.keydown = function (el, keycode) {
     var ev = document.createEvent("Events");
     ev.initEvent("keydown", true, true);
 
@@ -79,7 +73,7 @@ beforeEach(function() {
     el.dispatchEvent(ev);
   }
 
-  window.keyup = function(el, keycode) {
+  window.keyup = function (el, keycode) {
     var ev = document.createEvent("Events");
     ev.initEvent("keyup", true, true);
 
@@ -89,7 +83,7 @@ beforeEach(function() {
     el.dispatchEvent(ev);
   }
 
-  window.focus = function(el) {
+  window.focus = function (el) {
     var ev = document.createEvent("Events");
     ev.initEvent("focus", true, true);
     el.dispatchEvent(ev);

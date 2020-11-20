@@ -698,7 +698,7 @@ module.exports = function(grunt) {
   grunt.registerTask('jas_test', ['connect', 'jasmine']);
   grunt.registerTask('test_repeat', function(){
     const tasks = ['connect'];
-    const n = 10;
+    const n = 3;
     for (let i = 0; i < n; i++) {
       tasks.push('jasmine');
     }
