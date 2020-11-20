@@ -5,11 +5,13 @@ describe("Tabs Plugin", function () {
     beforeEach(async function() {
       await XloadFixtures(['tabs/tabsFixture.html']);
       normalTabs = $('.tabs.normal');
-      tabEl = document.getElementById("normal-tabs");
-      M.Tabs.init(tabEl, {});
+      M.Tabs.init(document.getElementById("normal-tabs"), {});
       window.location.hash = "";
       //HACK the tabs init function not fully initializing. it restores state even after element has been removed from DOM, even after using tabInstance.destroy()
       normalTabs.tabs('select', 'test2')
+    });
+    afterEach(function(){
+      XunloadFixtures();
     });
 
     it("should open to active tab", function () {
@@ -18,14 +20,14 @@ describe("Tabs Plugin", function () {
       normalTabs.find('.tab a').each(function() {
         var tabHash = $(this).attr('href');
         if (tabHash === activeTabHash) {
-          expect($(tabHash)).toBeVisible('active tab content should be visible by default');
+          expect($(tabHash)).toBeVisible('active tab content should be visible by default'); //TODO replace with alternative for deprecated jasmine-jquery
         } else {
-          expect($(tabHash)).toBeHidden('Tab content should be hidden by default');
+          expect($(tabHash)).toBeHidden('Tab content should be hidden by default'); //TODO replace with alternative for deprecated jasmine-jquery
         }
       });
 
       var indicator = normalTabs.find('.indicator');
-      expect(indicator).toExist('Indicator should be generated');
+      expect(indicator).toExist('Indicator should be generated'); //TODO replace with alternative for deprecated jasmine-jquery
       // expect(Math.abs(indicator.offset().left - activeTab.offset().left)).toBeLessThan(1, 'Indicator should be at active tab by default.');
     });
 
@@ -38,21 +40,21 @@ describe("Tabs Plugin", function () {
       const firstTabHash = firstTab.attr('href');
       const indicator = normalTabs.find('.indicator');
 
-      expect(indicator).toExist('Indicator should be generated');
+      expect(indicator).toExist('Indicator should be generated'); //TODO replace with alternative for deprecated jasmine-jquery
       // expect(Math.abs(indicator.offset().left - activeTab.offset().left)).toBeLessThan(1, 'Indicator should be at active tab by default.');
 
       click(disabledTab[0]);
 
       setTimeout(function() {
-        expect($(activeTabHash)).toBeVisible('Clicking disabled should not change tabs.');
-        expect($(disabledTabHash)).toBeHidden('Clicking disabled should not change tabs.');
+        expect($(activeTabHash)).toBeVisible('Clicking disabled should not change tabs.'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect($(disabledTabHash)).toBeHidden('Clicking disabled should not change tabs.'); //TODO replace with alternative for deprecated jasmine-jquery
 
 
         click(firstTab[0]);
 
         setTimeout(function() {
-          expect($(activeTabHash)).toBeHidden('Clicking tab should switch to that tab.');
-          expect($(firstTabHash)).toBeVisible('Clicking tab should switch to that tab.');
+          expect($(activeTabHash)).toBeHidden('Clicking tab should switch to that tab.'); //TODO replace with alternative for deprecated jasmine-jquery
+          expect($(firstTabHash)).toBeVisible('Clicking tab should switch to that tab.'); //TODO replace with alternative for deprecated jasmine-jquery
           expect(indicator.offset().left).toEqual(firstTab.offset().left, 'Indicator should move to clicked tab.');
           done();
         }, 400);
@@ -64,12 +66,12 @@ describe("Tabs Plugin", function () {
       const activeTabHash = activeTab.attr('href');
       const indicator = normalTabs.find('.indicator');
 
-      expect(indicator).toExist('Indicator should be generated');
+      expect(indicator).toExist('Indicator should be generated'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(activeTab[0]);
 
       setTimeout(function() {
-        expect($(activeTabHash)).toBeVisible('Clicking active tab while active should not hide it.');
+        expect($(activeTabHash)).toBeVisible('Clicking active tab while active should not hide it.'); //TODO replace with alternative for deprecated jasmine-jquery
         done();
       }, 400);
     });
@@ -100,17 +102,17 @@ describe("Tabs Plugin", function () {
       normalTabs.find('.tab a').each(function() {
         const tabHash = $(this).attr('href');
         if (tabHash === activeTabHash) {
-          expect($(tabHash)).toBeVisible('active tab content should be visible by default');
+          expect($(tabHash)).toBeVisible('active tab content should be visible by default'); //TODO replace with alternative for deprecated jasmine-jquery
         } else {
-          expect($(tabHash)).toBeHidden('Tab content should be hidden by default');
+          expect($(tabHash)).toBeHidden('Tab content should be hidden by default'); //TODO replace with alternative for deprecated jasmine-jquery
         }
       });
 
       normalTabs.tabs('select', 'test1');
 
       setTimeout(function() {
-        expect($(activeTabHash)).toBeHidden('Clicking tab should switch to that tab.');
-        expect($(firstTabHash)).toBeVisible('Clicking tab should switch to that tab.');
+        expect($(activeTabHash)).toBeHidden('Clicking tab should switch to that tab.'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect($(firstTabHash)).toBeVisible('Clicking tab should switch to that tab.'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(indicator.offset().left).toEqual(firstTab.offset().left, 'Indicator should move to clicked tab.');
         done();
       }, 400);

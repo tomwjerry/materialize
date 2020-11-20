@@ -1,7 +1,10 @@
 describe("Select Plugin", function () {
-  beforeEach(function() {
-    loadFixtures('select/selectFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['select/selectFixture.html']);
     $('select').formSelect();
+  });
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe("Select", function () {
@@ -17,22 +20,22 @@ describe("Select Plugin", function () {
       normalInput = $(selectInstance.wrapper).find('input.select-dropdown');
       normalDropdown = $(selectInstance.wrapper).find('ul.select-dropdown');
 
-      expect(normalInput).toExist('Should dynamically generate select dropdown structure.');
-      expect(normalDropdown).toExist('Should dynamically generate select dropdown structure.');
-      expect(normalInput).toBeVisible('Should be visible before dropdown is opened.');
-      expect(normalDropdown).toBeHidden('Should be hidden before dropdown is opened.');
+      expect(normalInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(normalDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(normalInput).toBeVisible('Should be visible before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(normalDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(normalInput[0]);
 
       setTimeout(function() {
-        expect(normalDropdown).toBeVisible('Should be visible after opening.');
+        expect(normalDropdown).toBeVisible('Should be visible after opening.'); //TODO replace with alternative for deprecated jasmine-jquery
         let firstOption = normalDropdown.find('li:not(.disabled)').first();
         click(firstOption[0]);
         normalInput.blur();
 
         setTimeout(function() {
-          expect(normalDropdown).toBeHidden('Should be hidden after choosing item.');
-          expect(normalInput.val()).toEqual(firstOption.text(), 'Value should equal chosen option.');
+          expect(normalDropdown).toBeHidden('Should be hidden after choosing item.'); //TODO replace with alternative for deprecated jasmine-jquery
+          expect(normalInput.val()).toEqual(firstOption.text(), 'Value should equal chosen option.'); 
           done();
         }, 400);
       }, 400);
@@ -85,15 +88,15 @@ describe("Select Plugin", function () {
       multipleInput = $(selectInstance.wrapper).find('input.select-dropdown');
       multipleDropdown = $(selectInstance.wrapper).find('ul.select-dropdown');
 
-      expect(multipleInput).toExist('Should dynamically generate select dropdown structure.');
-      expect(multipleDropdown).toExist('Should dynamically generate select dropdown structure.');
-      expect(multipleInput).toBeVisible('Should be visible before dropdown is opened.');
-      expect(multipleDropdown).toBeHidden('Should be hidden before dropdown is opened.');
+      expect(multipleInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleInput).toBeVisible('Should be visible before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(multipleInput[0]);
 
       setTimeout(function() {
-        expect(multipleDropdown).toBeVisible('Should be visible after opening.');
+        expect(multipleDropdown).toBeVisible('Should be visible after opening.'); //TODO replace with alternative for deprecated jasmine-jquery
         let firstOption = multipleDropdown.find('li:not(.disabled)').first();
         let secondOption = multipleDropdown.find('li:not(.disabled)').eq(1);
         let thirdOption = multipleDropdown.find('li:not(.disabled)').eq(2);
@@ -101,7 +104,7 @@ describe("Select Plugin", function () {
         click(document.body);
 
         setTimeout(function() {
-          expect(multipleDropdown).toBeHidden('Should be hidden after choosing item.');
+          expect(multipleDropdown).toBeHidden('Should be hidden after choosing item.'); //TODO replace with alternative for deprecated jasmine-jquery
           expect(browserSelect.val()).toEqual(['1', '2', '3'], 'Actual select should have correct selected values.');
           expect(multipleInput.val()).toEqual(firstOption.text() + ', ' + secondOption.text() + ', ' + thirdOption.text(), 'Value should equal chosen multiple options.');
           done();
@@ -113,15 +116,15 @@ describe("Select Plugin", function () {
       multipleInput = $(selectInstance.wrapper).find('input.select-dropdown');
       multipleDropdown = $(selectInstance.wrapper).find('ul.select-dropdown');
 
-      expect(multipleInput).toExist('Should dynamically generate select dropdown structure.');
-      expect(multipleDropdown).toExist('Should dynamically generate select dropdown structure.');
-      expect(multipleInput).toBeVisible('Should be hidden before dropdown is opened.');
-      expect(multipleDropdown).toBeHidden('Should be hidden before dropdown is opened.');
+      expect(multipleInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleInput).toBeVisible('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(multipleInput[0]);
 
       setTimeout(function() {
-        expect(multipleDropdown).toBeVisible('Should be visible after opening.');
+        expect(multipleDropdown).toBeVisible('Should be visible after opening.'); //TODO replace with alternative for deprecated jasmine-jquery
         let disabledOption = multipleDropdown.find('li.disabled');
         let secondOption = multipleDropdown.find('li:not(.disabled)').eq(1);
         let thirdOption = multipleDropdown.find('li:not(.disabled)').eq(2);
@@ -132,7 +135,7 @@ describe("Select Plugin", function () {
 
 
         setTimeout(function() {
-          expect(multipleDropdown).toBeHidden('Should be hidden after choosing item.');
+          expect(multipleDropdown).toBeHidden('Should be hidden after choosing item.'); //TODO replace with alternative for deprecated jasmine-jquery
           expect(browserSelect.val()).toEqual([], 'Actual select element should be empty because none chosen.');
           expect(multipleInput.val()).toEqual(disabledOption.text(), 'Value should equal default because none chosen.');
           done();
@@ -167,21 +170,21 @@ describe("Select Plugin", function () {
         expect($(this).attr('label')).toEqual(optgroups.eq(i).text(), 'should generate optgroup structure.');
       });
 
-      expect(optInput).toExist('Should dynamically generate select dropdown structure.');
-      expect(optDropdown).toExist('Should dynamically generate select dropdown structure.');
-      expect(optInput).toBeVisible('Should be hidden before dropdown is opened.');
-      expect(optDropdown).toBeHidden('Should be hidden before dropdown is opened.');
+      expect(optInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optInput).toBeVisible('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(optInput[0]);
 
       setTimeout(function() {
-        expect(optDropdown).toBeVisible('Should be visible after opening.');
+        expect(optDropdown).toBeVisible('Should be visible after opening.'); //TODO replace with alternative for deprecated jasmine-jquery
         let secondOption = optDropdown.find('li:not(.disabled):not(.optgroup)').eq(1);
         click(secondOption[0]);
         optInput.blur();
 
         setTimeout(function() {
-          expect(optDropdown).toBeHidden('Should be hidden after choosing item.');
+          expect(optDropdown).toBeHidden('Should be hidden after choosing item.'); //TODO replace with alternative for deprecated jasmine-jquery
           expect(optInput.val()).toEqual(secondOption.text(), 'Value should be equal to selected option.');
           done();
         }, 400);
@@ -192,8 +195,8 @@ describe("Select Plugin", function () {
       optionInOptgroup = $(selectInstance.wrapper).find('li.optgroup + li');
       optionAfterOptGroup = $(selectInstance.wrapper).find('ul li:last-child');
 
-      expect(optionInOptgroup).toHaveClass('optgroup-option', 'Should have optgroup-option class');
-      expect(optionAfterOptGroup).not.toHaveClass('optgroup-option', 'Should not have optgroup-option class');
+      expect(optionInOptgroup).toHaveClass('optgroup-option', 'Should have optgroup-option class'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optionAfterOptGroup).not.toHaveClass('optgroup-option', 'Should not have optgroup-option class'); //TODO replace with alternative for deprecated jasmine-jquery
     });
 
     it("should not do anything when optgroup li clicked", function(done) {
@@ -206,21 +209,21 @@ describe("Select Plugin", function () {
         expect($(this).attr('label')).toEqual(optgroups.eq(i).text(), 'should generate optgroup structure.');
       });
 
-      expect(optInput).toExist('Should dynamically generate select dropdown structure.');
-      expect(optDropdown).toExist('Should dynamically generate select dropdown structure.');
-      expect(optInput).toBeVisible('Should be hidden before dropdown is opened.');
-      expect(optDropdown).toBeHidden('Should be hidden before dropdown is opened.');
+      expect(optInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optInput).toBeVisible('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(optInput[0]);
 
       setTimeout(function() {
-        expect(optDropdown).toBeVisible('Should be visible after opening.');
+        expect(optDropdown).toBeVisible('Should be visible after opening.'); //TODO replace with alternative for deprecated jasmine-jquery
         let optgroup = optDropdown.find('li.optgroup').first();
         click(optgroup[0]);
         optInput.blur();
 
         setTimeout(function() {
-          expect(optDropdown).toBeVisible('Should not be hidden after choosing invalid item.');
+          expect(optDropdown).toBeVisible('Should not be hidden after choosing invalid item.'); //TODO replace with alternative for deprecated jasmine-jquery
           expect(optInput.val()).toEqual(originalVal, 'Value should be equal to original option.');
           done();
         }, 400);

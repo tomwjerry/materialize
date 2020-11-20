@@ -1,5 +1,11 @@
 jasmine.getFixtures().fixturesPath = 'http://localhost:9001/tests/spec';
-jasmine.getEnv().configure({random: false})
+// jasmine.getEnv().configure({random: false})
+
+// jasmine-jquery matchers needing replacements:
+// toExist()
+// toBeHidden()
+// toBeVisible()
+// toHaveClass()
 
 const fixturesCache = {};
 const containerId = 'xjasmine-fixtures';
@@ -27,10 +33,38 @@ async function XloadFixtures(fixtureUrls) {
   const container = document.createElement('div');
   container.id = containerId;
   container.innerHTML = htmlChunks.join('');
-  
+
   // console.log("body before append", document.body.innerHTML);
   document.body.appendChild(container);
   // console.log("body after append", document.body.innerHTML);
+}
+
+function XunloadFixtures() {
+  let oldcontainer = document.getElementById(containerId);
+  // console.log("body before clear", document.body.innerHTML);
+  if (oldcontainer) {
+    oldcontainer.parentNode.removeChild(oldcontainer);
+    oldcontainer = null;
+  }
+
+  //the container leaks. Lots of code moves elements around to different parent containers. These must be cleaned up.
+  let c = document.body.children;
+  let scriptCount = 0;
+  for (let i = 0; i < c.length; i++) {
+    const elt = c[i];
+    if (elt.tagName === "SCRIPT" || elt.classList[0] === "jasmine_html-reporter") {
+      scriptCount++;
+    }
+  }
+  while (c.length > scriptCount) {
+    for (let i = 0; i < c.length; i++) {
+      const elt = c[i];
+      if (elt.tagName !== "SCRIPT" && elt.classList[0] !== "jasmine_html-reporter") {
+        document.body.removeChild(elt);
+      }
+    }
+    c = document.body.children;
+  }
 }
 
 

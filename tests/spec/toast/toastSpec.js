@@ -11,11 +11,11 @@ describe( 'Toasts:', function() {
       setTimeout(function() {
         toast = $('.toast-id-2');
         expect(toast.length).toBe(1);
-        expect(toast).toBeVisible();
+        expect(toast).toBeVisible(); //TODO replace with alternative for deprecated jasmine-jqueryv
         expect(toast.text()).toBe('Test toast');
         setTimeout(function() {
           toast = $('.toast-id-2');
-          expect(toast).toBeVisible();
+          expect(toast).toBeVisible(); //TODO replace with alternative for deprecated jasmine-jquery
           expect(toast.length).toBe(1, 'because toast duration still on going');
           setTimeout(function() {
             toast = $('.toast-id-2');

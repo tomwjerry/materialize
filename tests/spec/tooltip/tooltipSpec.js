@@ -1,9 +1,12 @@
 describe( 'Tooltip:', function() {
   var tooltippedBtn, tooltip;
 
-  beforeEach(function() {
-    loadFixtures('tooltip/tooltipFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['tooltip/tooltipFixture.html']);
     $('.tooltipped').tooltip({enterDelay: 0, exitDelay: 0, inDuration: 100, outDuration: 100});
+  });
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe('Tooltip opens and closes properly', function() {
@@ -16,13 +19,13 @@ describe( 'Tooltip:', function() {
       // Mouse enter
       mouseenter(tooltippedBtn[0]);
       setTimeout(function() {
-        expect(tooltip).toBeVisible('because mouse entered tooltipped btn');
+        expect(tooltip).toBeVisible('because mouse entered tooltipped btn'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(tooltip.children('.tooltip-content').text()).toBe('I am tooltip',
             'because that is the defined text in the html attribute');
         // Mouse leave
         tooltippedBtn.trigger('mouseleave');
         setTimeout(function() {
-          expect(tooltip).toBeVisible('because mouse left tooltipped btn');
+          expect(tooltip).toBeVisible('because mouse left tooltipped btn'); //TODO replace with alternative for deprecated jasmine-jquery
           done();
         }, 300);
       }, 200);
@@ -94,7 +97,7 @@ describe( 'Tooltip:', function() {
       }, 150);
 
       setTimeout(function() {
-        expect(tooltip).toBeVisible('because 200 seconds has passed');
+        expect(tooltip).toBeVisible('because 200 seconds has passed'); //TODO replace with alternative for deprecated jasmine-jquery
         done();
       }, 250);
 

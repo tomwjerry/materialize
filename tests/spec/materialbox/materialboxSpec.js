@@ -1,8 +1,11 @@
 describe( 'Materialbox:', function() {
   var transformMaterialbox;
 
-  beforeEach(function() {
-    loadFixtures('materialbox/materialboxFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['materialbox/materialboxFixture.html']);
+  });
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe('Materialbox opens correctly with transformed ancestor', function() {
@@ -18,8 +21,8 @@ describe( 'Materialbox:', function() {
         var overlayRect = overlay[0].getBoundingClientRect();
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
-        expect(overlay).toExist('because it is generated on init');
-        expect(overlay).toBeVisible('because materialbox was clicked');
+        expect(overlay).toExist('because it is generated on init'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(overlay).toBeVisible('because materialbox was clicked'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(overlayRect.top).toEqual(0);
         expect(overlayRect.left).toEqual(0);
         expect(overlayRect.width).toEqual(windowWidth);

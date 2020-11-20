@@ -1,7 +1,7 @@
 describe("Chips", function () {
 
-  beforeEach(function() {
-    loadFixtures('chips/chipsFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['chips/chipsFixture.html']);
     $('.chips').chips();
     $('.chips-initial').chips({
       data: [{ tag: 'Apple' }, { tag: 'Microsoft' }, { tag: 'Google' }],
@@ -17,6 +17,9 @@ describe("Chips", function () {
         'Google': null
       }
     });
+  });
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe("chips plugin", function () {

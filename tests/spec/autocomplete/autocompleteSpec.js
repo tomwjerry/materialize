@@ -1,6 +1,6 @@
 describe("Autocomplete Plugin", function () {
-  beforeEach(function(done) {
-    loadFixtures('autocomplete/autocompleteFixture.html');
+  beforeEach(async function(done) {
+    await XloadFixtures(['autocomplete/autocompleteFixture.html']);
     setTimeout(function() {
       $('input.autocomplete').autocomplete({
         data: {
@@ -11,6 +11,9 @@ describe("Autocomplete Plugin", function () {
       });
       done();
     }, 400);
+  });
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe("Autocomplete", function () {

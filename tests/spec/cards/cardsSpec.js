@@ -1,8 +1,12 @@
 describe( "Cards", function () {
   var reveal;
 
-  beforeEach(function() {
-    loadFixtures('cards/cardsFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['cards/cardsFixture.html']);
+  });
+
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe("reveal cards", function () {
@@ -16,13 +20,13 @@ describe( "Cards", function () {
       var revealDiv = revealCard.find('.card-reveal');
       var activator = revealCard.find('.activator');
 
-      expect(revealDiv).toBeHidden('reveal div should be hidden initially');
+      expect(revealDiv).toBeHidden('reveal div should be hidden initially'); //TODO replace with alternative for deprecated jasmine-jquery
 
       setTimeout(function() {
         activator.click();
 
         setTimeout(function() {
-          expect(revealDiv).toBeVisible('reveal did not appear after activator was clicked.');
+          expect(revealDiv).toBeVisible('reveal did not appear after activator was clicked.'); //TODO replace with alternative for deprecated jasmine-jquery
 
           // Check revealDiv covers reveal card.
           expect(revealDiv.outerWidth()).toEqual(revealCard.outerWidth(), 'activator was not as wide as reveal card.');

@@ -1,6 +1,10 @@
 describe("Sidenav Plugin", function () {
-  beforeEach(function() {
-    loadFixtures('sidenav/sidenavFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['sidenav/sidenavFixture.html']);
+  });
+
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe("Sidenav", function () {

@@ -1,8 +1,11 @@
 describe("Fab", function () {
   var FAB;
 
-  beforeEach(function() {
-    loadFixtures('fab/fabFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['fab/fabFixture.html']);
+  });
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe("Floating Action Button", function () {

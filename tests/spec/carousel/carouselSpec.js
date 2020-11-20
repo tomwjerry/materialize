@@ -1,7 +1,10 @@
 describe("Carousel", function () {
 
-  beforeEach(function() {
-    loadFixtures('carousel/carouselFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['carousel/carouselFixture.html']);
+  });
+  afterEach(function(){
+    XunloadFixtures();
   });
 
   describe("carousel plugin", function () {

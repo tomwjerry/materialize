@@ -2,8 +2,8 @@ describe( 'Modal:', function() {
   var transformMaterialbox;
   var trigger1, modal1, trigger2, modal2, trigger3, modal3;
 
-  beforeEach(function() {
-    loadFixtures('modal/modalFixture.html');
+  beforeEach(async function() {
+    await XloadFixtures(['modal/modalFixture.html']);
     trigger1 = $('.btn[href="#modal1"]');
     triggerIcon1 = $('.btn[data-target="modal1"] i');
     trigger2 = $('.btn[href="#modal2"]');
@@ -12,16 +12,19 @@ describe( 'Modal:', function() {
     modal2 = $('#modal2');
     modal3 = $('#modal3');
   });
+  afterEach(function(){
+    XunloadFixtures();
+  });
 
   describe('Modals', function() {
     it('Should open and close correctly', function(done) {
       modal1.modal();
-      expect(modal1).toBeHidden('Modal should be hidden');
+      expect(modal1).toBeHidden('Modal should be hidden'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(trigger1[0]);
 
       setTimeout(function() {
-        expect(modal1).toBeVisible('Modal should be shown');
+        expect(modal1).toBeVisible('Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(modal1.hasClass('open')).toEqual(true, 'Modal should have class open');
 
         // Check overlay is attached
@@ -43,12 +46,12 @@ describe( 'Modal:', function() {
 
     it('Should open and close correctly with children elements in trigger', function(done) {
       modal1.modal();
-      expect(modal1).toBeHidden('Modal should be hidden');
+      expect(modal1).toBeHidden('Modal should be hidden'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(triggerIcon1[0]);
 
       setTimeout(function() {
-        expect(modal1).toBeVisible('Modal should be shown');
+        expect(modal1).toBeVisible('Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(modal1.hasClass('open')).toEqual(true, 'Modal should have class open');
 
         // Check overlay is attached
@@ -75,14 +78,14 @@ describe( 'Modal:', function() {
 
       click(trigger1[0]);
       setTimeout(function() {
-        expect(modal1).toBeVisible('Modal should be shown');
+        expect(modal1).toBeVisible('Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
         var overlay = M.Modal.getInstance(modal1[0]).$overlay;
         var overlayInDOM = $.contains(document, overlay[0]);
         expect(overlayInDOM).toEqual(true, 'Overlay should be attached on open');
 
         click(overlay[0]);
         setTimeout(function() {
-          expect(modal1).toBeVisible('Modal should be shown');
+          expect(modal1).toBeVisible('Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
           var overlayInDOM = $.contains(document, overlay[0]);
           expect(overlayInDOM).toEqual(true, 'modal should not be dismissable');
 

@@ -3,24 +3,26 @@ describe("Dropdown Plugin", function () {
   
   describe("Dropdown basic functions", function () {
     var normalDropdown;
-    beforeEach(function () {
-      
-      loadFixtures('dropdown/dropdownFixture.html');
+    beforeEach(async function () {      
+      await XloadFixtures(['dropdown/dropdownFixture.html']);
       $('.dropdown-trigger').dropdown();
+    });
+    afterEach(function(){
+      XunloadFixtures();
     });
 
     it("should open and close programmatically", function (done) {
       var dropdown1 = $('#dropdown1');
       normalDropdown = $('#dropdownActivator');
 
-      expect(dropdown1).toBeHidden('Should be hidden before dropdown is opened.');
+      expect(dropdown1).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
       normalDropdown.dropdown('open');
       setTimeout(function () {
-        expect(dropdown1).toBeVisible('Should be shown after dropdown is opened.');
+        expect(dropdown1).toBeVisible('Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
         normalDropdown.dropdown('close');
 
         setTimeout(function () {
-          expect(dropdown1).toBeHidden('Should be hidden after dropdown is closed.');
+          expect(dropdown1).toBeHidden('Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
           done();
         }, 400);
       }, 400);
@@ -29,16 +31,16 @@ describe("Dropdown Plugin", function () {
     it("should close dropdown on document click if programmatically opened", function (done) {
       normalDropdown = $('#dropdownActivator');
 
-      expect(dropdown1).toBeHidden('Should be hidden before dropdown is opened.');
+      expect(dropdown1).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       normalDropdown.dropdown('open');
 
       setTimeout(function () {
-        expect(dropdown1).toBeVisible('Should be shown after dropdown is opened.');
+        expect(dropdown1).toBeVisible('Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
         click(document.body);
 
         setTimeout(function () {
-          expect(dropdown1).toBeHidden('Should be hidden after dropdown is closed.');
+          expect(dropdown1).toBeHidden('Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
           done();
         }, 400);
       }, 400);
@@ -48,16 +50,16 @@ describe("Dropdown Plugin", function () {
       var dropdown2 = $('#dropdown2');
       normalDropdown = $('#dropdownBubble');
 
-      expect(dropdown2).toBeHidden('Should be hidden before dropdown is opened.');
+      expect(dropdown2).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       normalDropdown.find('i').click();
 
       setTimeout(function () {
-        expect(dropdown2).toBeVisible('Should be shown after dropdown is opened.');
+        expect(dropdown2).toBeVisible('Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
         click(document.body);
 
         setTimeout(function () {
-          expect(dropdown2).toBeHidden('Should be hidden after dropdown is closed.');
+          expect(dropdown2).toBeHidden('Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
           done();
         }, 400);
       }, 400);
@@ -80,8 +82,11 @@ describe("Dropdown Plugin", function () {
 
   describe("Dropdown options and positioning", function () {
 
-    beforeEach(function () {
-      loadFixtures('dropdown/dropdownFixtureAdvanced.html');
+    beforeEach(async function () {
+      await XloadFixtures(['dropdown/dropdownFixtureAdvanced.html']);
+    });
+    afterEach(function(){
+      XunloadFixtures();
     });
 
     it("should cover trigger element when coverTrigger is true", function (done) {
@@ -91,7 +96,7 @@ describe("Dropdown Plugin", function () {
       setTimeout(function () {
         trigger = M.Dropdown.getInstance(target).el
         dropdown = M.Dropdown.getInstance(target).dropdownEl;
-        expect(M.Dropdown.getInstance(target).dropdownEl).toBeVisible("because the mouse is hovering");
+        expect(M.Dropdown.getInstance(target).dropdownEl).toBeVisible("because the mouse is hovering"); //TODO replace with alternative for deprecated jasmine-jquery
         expect(dropdown.top == trigger.top)
           .toBeTruthy("because the dropdown top should be at the trigger top");
         done();
@@ -165,11 +170,14 @@ describe("Dropdown Plugin", function () {
 
   describe("Function inside modal content", function () {
     
-    beforeEach(function () {
-      loadFixtures('dropdown/dropdownFixtureAdvanced.html');
+    beforeEach(async function () {
+      await XloadFixtures(['dropdown/dropdownFixtureAdvanced.html']);
       modal1 = $('#modal1');
       modal1.modal();
       click($('#modal1-trigger')[0]);
+    });
+    afterEach(function(){
+      XunloadFixtures();
     });
 
     it("should cover trigger element when coverTrigger is true", function (done) {
