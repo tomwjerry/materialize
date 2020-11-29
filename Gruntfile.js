@@ -13,7 +13,8 @@ module.exports = function(grunt) {
             'node_modules/jasmine-jquery/lib/jasmine-jquery.js'
           ],
           styles: 'bin/materialize.css',
-          specs: 'tests/spec/**/*Spec.js',
+          //specs: 'tests/spec/**/*Spec.js',
+          specs: 'tests/spec/autocomplete/autocompleteSpec.js',
           helpers: 'tests/spec/helper.js',
           keepRunner: true,
           page: {
@@ -628,7 +629,7 @@ module.exports = function(grunt) {
               next();
             });
             return middlewares
-          }           
+          }
         }
       }
     }
