@@ -2,15 +2,15 @@ describe("Chips", function () {
 
   beforeEach(async function() {
     await XloadFixtures(['chips/chipsFixture.html']);
-    $('.chips').chips();
-    $('.chips-initial').chips({
+    M.Chips.init(document.querySelector('.chips'));
+    M.Chips.init(document.querySelector('.chips-initial'), {
       data: [{ tag: 'Apple' }, { tag: 'Microsoft' }, { tag: 'Google' }],
     });
-    $('.chips-placeholder').chips({
+    M.Chips.init(document.querySelector('.chips-placeholder'), {
       placeholder: 'Enter a tag',
       secondaryPlaceholder: '+Tag',
     });
-    $('.chips-autocomplete').chips({
+    M.Chips.init(document.querySelector('.chips-autocomplete'), {
       autocompleteData: {
         'Apple': null,
         'Microsoft': null,
@@ -23,39 +23,36 @@ describe("Chips", function () {
   });
 
   describe("chips plugin", function () {
-    var $chips, $input;
-
-    // beforeEach(function() {
-    // });
+    var chips, input;
 
     it("should work with multiple initializations", function () {
-      $chips = $('.chips').first();
-      $chips.chips();
-      $chips.chips();
-      $chips.chips();
-      $chips.chips();
+      chips = document.querySelector('.chips');
+      M.Chips.init(chips);
+      M.Chips.init(chips);
+      M.Chips.init(chips);
+      M.Chips.init(chips);
 
-      $input = $chips.find('input');
+      input = chips.querySelectorAll('input');
 
-      expect($input.length).toEqual(1, 'Should dynamically generate chips structure.');
+      expect(input.length).toEqual(1, 'Should dynamically generate chips structure.');
     });
 
     it("should be able to add chip", function (done) {
-      $chips = $('.chips').first();
-      $input = $chips.find('input');
+      chips = document.querySelector('.chips');
+      input = chips.querySelector('input');
 
-      $input.val('one');
+      input.value = 'one';
 
-      keydown($input[0], 13);
+      keydown(input, 13);
 
       setTimeout(function() {
-        var numChips = $chips.find('.chip').length;
-        var $oneChip = $chips.find('.chip').first();
+        var numChips = chips.querySelectorAll('.chip').length;
+        var oneChip = chips.querySelector('.chip');
 
         expect(numChips).toEqual(1, 'one chip should have been added');
 
-        $oneChip.children().remove()
-        expect($oneChip.text()).toEqual('one', 'the chip should have value "one"');
+        oneChip.children[0].remove();
+        expect(oneChip.innerText).toEqual('one', 'the chip should have value "one"');
 
         done();
       }, 400);
@@ -63,16 +60,16 @@ describe("Chips", function () {
     });
 
     it("should be able to delete chip", function (done) {
-      $chips = $('.chips.chips-initial').first();
-      $input = $chips.find('input');
-      var numChips = $chips.find('.chip').length
+      chips = document.querySelector('.chips.chips-initial');
+      input = chips.querySelector('input');
+      var numChips = chips.querySelectorAll('.chip').length
 
       expect(numChips).toEqual(3, '3 initial chips should have been added');
 
-      $chips.find('.chip .close').first().click();
+      click(chips.querySelector('.chip .close'));
 
       setTimeout(function() {
-        numChips = $chips.find('.chip').length
+        numChips = chips.querySelectorAll('.chip').length
 
         expect(numChips).toEqual(2, 'one chip should have been deleted');
 
@@ -82,14 +79,14 @@ describe("Chips", function () {
     });
 
     it("should have working callbacks", function(done) {
-      $chips = $('.chips').first();
+      chips = document.querySelector('.chips');
       var chipAdd = false;
       var chipAdded = null;
       var chipSelect = false;
       var chipSelected = null;
       var chipDelete = false;
       var chipDeleted = null;
-      $chips.chips({
+      M.Chips.init(chips, {
         data: [{ tag: 'One' }, { tag: 'Two' }, { tag: 'Three' }],
         onChipAdd: function(chipsEl, chipEl) {
           chipAdded = chipEl;
@@ -105,30 +102,30 @@ describe("Chips", function () {
         }
       });
 
-      $input = $chips.find('input');
-      $input.val('Four');
+      input = chips.querySelector('input');
+      input.value = 'Four';
 
       expect(chipAdd).toEqual(false, 'callback not yet fired');
       expect(chipSelect).toEqual(false, 'callback not yet fired');
       expect(chipDelete).toEqual(false, 'callback not yet fired');
 
-      keydown($input[0], 13);
+      keydown(input, 13);
 
       setTimeout(function() {
         expect(chipAdd).toEqual(true, 'add callback fired');
         expect(chipAdded.childNodes[0].nodeValue).toEqual('Four', 'add callback provides correct chip element');
 
-        click($chips.find('.chip')[1]);
+        click(chips.querySelectorAll('.chip')[1]);
 
         setTimeout(function() {
           expect(chipSelect).toEqual(true, 'select callback fired');
           expect(chipSelected.childNodes[0].nodeValue).toEqual('Two', 'select callback provides correct chip element');
 
-          click($chips.find('.close')[2]);
+          click(chips.querySelectorAll('.close')[2]);
 
           setTimeout(function() {
             expect(chipDelete).toEqual(true, 'delete callback fired');
-          expect(chipDeleted.childNodes[0].nodeValue).toEqual('Three', 'add callback provides correct chip element');
+            expect(chipDeleted.childNodes[0].nodeValue).toEqual('Three', 'add callback provides correct chip element');
 
             done();
           }, 100);
@@ -140,5 +137,4 @@ describe("Chips", function () {
   // describe("Chips autocomplete", function () {
 
   // });
-
 });
