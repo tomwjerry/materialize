@@ -1,16 +1,15 @@
 describe( 'Modal:', function() {
-  var transformMaterialbox;
   var trigger1, modal1, trigger2, modal2, trigger3, modal3;
 
   beforeEach(async function() {
     await XloadFixtures(['modal/modalFixture.html']);
-    trigger1 = $('.btn[href="#modal1"]');
-    triggerIcon1 = $('.btn[data-target="modal1"] i');
-    trigger2 = $('.btn[href="#modal2"]');
-    trigger3 = $('.btn[href="#modal3"]');
-    modal1 = $('#modal1');
-    modal2 = $('#modal2');
-    modal3 = $('#modal3');
+    trigger1 = document.querySelector('.btn[href="#modal1"]');
+    triggerIcon1 = document.querySelector('.btn[data-target="modal1"] i');
+    trigger2 = document.querySelector('.btn[href="#modal2"]');
+    trigger3 = document.querySelector('.btn[href="#modal3"]');
+    modal1 = document.querySelector('#modal1');
+    modal2 = document.querySelector('#modal2');
+    modal3 = document.querySelector('#modal3');
   });
   afterEach(function(){
     XunloadFixtures();
@@ -18,26 +17,28 @@ describe( 'Modal:', function() {
 
   describe('Modals', function() {
     it('Should open and close correctly', function(done) {
-      modal1.modal();
-      expect(modal1).toBeHidden('Modal should be hidden'); //TODO replace with alternative for deprecated jasmine-jquery
+      M.Modal.init(modal1);
+      var modal1Style = getComputedStyle(modal1);
+      expect(modal1Style.getPropertyValue('display')).toEqual('none', 'Modal should be hidden'); //TODO replace with alternative for deprecated jasmine-jquery
 
-      click(trigger1[0]);
+      click(trigger1);
 
       setTimeout(function() {
-        expect(modal1).toBeVisible('Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
-        expect(modal1.hasClass('open')).toEqual(true, 'Modal should have class open');
+        modal1Style = getComputedStyle(modal1);
+        expect(modal1Style.getPropertyValue('display')).toEqual('block', 'Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(modal1.classList.contains('open')).toBeTrue('Modal should have class open');
 
         // Check overlay is attached
-        var overlay = M.Modal.getInstance(modal1[0]).$overlay;
-        var overlayInDOM = $.contains(document, overlay[0]);
-        expect(overlayInDOM).toEqual(true, 'Overlay should be attached on open');
+        var overlay = M.Modal.getInstance(modal1).$overlay;
+        var overlayInDOM = document.contains(overlay[0]);
+        expect(overlayInDOM).toBeTrue('Overlay should be attached on open');
 
         click(overlay[0]);
         setTimeout(function() {
-          expect(modal1.hasClass('open')).toEqual(false, 'Modal should have class open removed');
+          expect(modal1.classList.contains('open')).toBeFalse('Modal should have class open removed');
 
-          var overlayInDOM = $.contains(document, overlay[0]);
-          expect(overlayInDOM).toEqual(false, 'Overlay should be removed on close');
+          var overlayInDOM = document.contains(overlay[0]);
+          expect(overlayInDOM).toBeFalse('Overlay should be removed on close');
 
           done();
         }, 500);
@@ -45,26 +46,28 @@ describe( 'Modal:', function() {
     });
 
     it('Should open and close correctly with children elements in trigger', function(done) {
-      modal1.modal();
-      expect(modal1).toBeHidden('Modal should be hidden'); //TODO replace with alternative for deprecated jasmine-jquery
+      M.Modal.init(modal1);
+      var modal1Style = getComputedStyle(modal1);
+      expect(modal1Style.getPropertyValue('display')).toEqual('none', 'Modal should be hidden'); //TODO replace with alternative for deprecated jasmine-jquery
 
-      click(triggerIcon1[0]);
+      click(triggerIcon1);
 
       setTimeout(function() {
-        expect(modal1).toBeVisible('Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
-        expect(modal1.hasClass('open')).toEqual(true, 'Modal should have class open');
+        modal1Style = getComputedStyle(modal1);
+        expect(modal1Style.getPropertyValue('display')).toEqual('block', 'Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(modal1.classList.contains('open')).toBeTrue('Modal should have class open');
 
         // Check overlay is attached
-        var overlay = M.Modal.getInstance(modal1[0]).$overlay;
-        var overlayInDOM = $.contains(document, overlay[0]);
-        expect(overlayInDOM).toEqual(true, 'Overlay should be attached on open');
+        var overlay = M.Modal.getInstance(modal1).$overlay;
+        var overlayInDOM = document.contains(overlay[0]);
+        expect(overlayInDOM).toBeTrue('Overlay should be attached on open');
 
         click(overlay[0]);
         setTimeout(function() {
-          expect(modal1.hasClass('open')).toEqual(false, 'Modal should have class open removed');
+          expect(modal1.classList.contains('open')).toBeFalse('Modal should have class open removed');
 
-          var overlayInDOM = $.contains(document, overlay[0]);
-          expect(overlayInDOM).toEqual(false, 'Overlay should be removed on close');
+          var overlayInDOM = document.contains(overlay[0]);
+          expect(overlayInDOM).toBeFalse('Overlay should be removed on close');
 
           done();
         }, 500);
@@ -72,22 +75,23 @@ describe( 'Modal:', function() {
     });
 
     it('Should have a dismissible option', function(done) {
-      modal1.modal({
+      M.Modal.init(modal1, {
         dismissible: false
       });
 
-      click(trigger1[0]);
+      click(trigger1);
       setTimeout(function() {
-        expect(modal1).toBeVisible('Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
-        var overlay = M.Modal.getInstance(modal1[0]).$overlay;
-        var overlayInDOM = $.contains(document, overlay[0]);
+        modal1Style = getComputedStyle(modal1);
+        expect(modal1Style.getPropertyValue('display')).toEqual('block', 'Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
+        var overlay = M.Modal.getInstance(modal1).$overlay;
+        var overlayInDOM = document.contains(overlay[0]);
         expect(overlayInDOM).toEqual(true, 'Overlay should be attached on open');
 
         click(overlay[0]);
         setTimeout(function() {
-          expect(modal1).toBeVisible('Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
-          var overlayInDOM = $.contains(document, overlay[0]);
-          expect(overlayInDOM).toEqual(true, 'modal should not be dismissable');
+          expect(modal1Style.getPropertyValue('display')).toEqual('block', 'Modal should be shown'); //TODO replace with alternative for deprecated jasmine-jquery
+          var overlayInDOM = document.contains(overlay[0]);
+          expect(overlayInDOM).toBeTrue('modal should not be dismissable');
 
           done();
         }, 500);
@@ -97,7 +101,7 @@ describe( 'Modal:', function() {
     it('Should have callbacks', function(done) {
       var readyTest = false;
       var completeTest = false;
-      modal1.modal({
+      M.Modal.init(modal1, {
         onOpenStart: function() {
           readyTest = true;
         },
@@ -106,19 +110,19 @@ describe( 'Modal:', function() {
         }
       });
 
-      expect(readyTest).toEqual(false, 'callback not yet fired');
-      expect(completeTest).toEqual(false, 'callback not yet fired');
+      expect(readyTest).toBeFalse('callback not yet fired');
+      expect(completeTest).toBeFalse('callback not yet fired');
 
-      click(trigger1[0]);
+      click(trigger1);
       setTimeout(function() {
-        expect(readyTest).toEqual(true, 'callback fired');
-        expect(completeTest).toEqual(false, 'callback not yet fired');
+        expect(readyTest).toBeTrue('callback fired');
+        expect(completeTest).toBeFalse('callback not yet fired');
 
-        var overlay = M.Modal.getInstance(modal1[0]).$overlay;
+        var overlay = M.Modal.getInstance(modal1).$overlay;
         click(overlay[0]);
         setTimeout(function() {
-          expect(readyTest).toEqual(true, 'callback fired');
-          expect(completeTest).toEqual(true, 'callback fired');
+          expect(readyTest).toBeTrue('callback fired');
+          expect(completeTest).toBeTrue('callback fired');
 
           done();
         }, 500);
