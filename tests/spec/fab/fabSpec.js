@@ -1,5 +1,4 @@
 describe("Fab", function () {
-  var FAB;
 
   beforeEach(async function() {
     await XloadFixtures(['fab/fabFixture.html']);
@@ -12,19 +11,21 @@ describe("Fab", function () {
     var normalFAB;
 
     beforeEach(function() {
-      normalFAB = $('.fixed-action-btn').first();
-      normalFAB.floatingActionButton();
+      normalFAB = document.querySelector('.fixed-action-btn');
+      M.FloatingActionButton.init(normalFAB);
     });
 
     it("should open correctly", function (done) {
-      var ul = normalFAB.find('> ul');
-      expect(ul.css('visibility')).toEqual('hidden', 'FAB menu div should be hidden initially');
+      var ul = normalFAB.querySelector('ul');
+      var ulStyle = getComputedStyle(ul);
+      expect(ulStyle.getPropertyValue('visibility')).toEqual('hidden', 'FAB menu div should be hidden initially');
 
       setTimeout(function() {
-        mouseenter(normalFAB[0]);
+        mouseenter(normalFAB);
 
         setTimeout(function() {
-          expect(ul.css('visibility')).toEqual('visible', 'FAB menu did not appear after mouseenter.');
+          ulStyle = getComputedStyle(ul);
+          expect(ulStyle.getPropertyValue('visibility')).toEqual('visible', 'FAB menu did not appear after mouseenter.');
 
           done();
         }, 400);
@@ -37,26 +38,29 @@ describe("Fab", function () {
     var toolbarFAB;
 
     beforeEach(function() {
-      toolbarFAB = $('.fixed-action-btn.toolbar');
-      toolbarFAB.floatingActionButton({
+      toolbarFAB = document.querySelector('.fixed-action-btn.toolbar');
+      M.FloatingActionButton.init(toolbarFAB, {
         toolbarEnabled: true
       });
     });
 
     it("should open correctly", function (done) {
-      var ul = toolbarFAB.find('> ul');
-      expect(ul.css('visibility')).toEqual('hidden', 'FAB menu div should be hidden initially');
+      var ul = toolbarFAB.querySelector('ul');
+      var ulStyle = getComputedStyle(ul);
+      expect(ulStyle.getPropertyValue('visibility')).toEqual('hidden', 'FAB menu div should be hidden initially');
 
 
       setTimeout(function() {
-        click(toolbarFAB[0]);
+        click(toolbarFAB);
 
         setTimeout(function() {
-          expect(ul.css('visibility')).toEqual('visible', 'FAB menu did not appear after mouseenter.');
+          ulStyle = getComputedStyle(ul);
+          expect(ulStyle.getPropertyValue('visibility')).toEqual('visible', 'FAB menu did not appear after mouseenter.');
           click(document.body);
 
           setTimeout(function() {
-            expect(ul.css('visibility')).toEqual('hidden', 'FAB menu div should be hidden after close');
+            ulStyle = getComputedStyle(ul);
+            expect(ulStyle.getPropertyValue('visibility')).toEqual('hidden', 'FAB menu div should be hidden after close');
 
             done();
           }, 400);
