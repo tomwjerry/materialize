@@ -8,7 +8,7 @@ describe("Fab", function () {
   });
 
   describe("Floating Action Button", function () {
-    var normalFAB;
+    let normalFAB;
 
     beforeEach(function() {
       normalFAB = document.querySelector('.fixed-action-btn');
@@ -16,8 +16,8 @@ describe("Fab", function () {
     });
 
     it("should open correctly", function (done) {
-      var ul = normalFAB.querySelector('ul');
-      var ulStyle = getComputedStyle(ul);
+      let ul = normalFAB.querySelector('ul');
+      let ulStyle = getComputedStyle(ul);
       expect(ulStyle.getPropertyValue('visibility')).toEqual('hidden', 'FAB menu div should be hidden initially');
 
       setTimeout(function() {
@@ -35,7 +35,7 @@ describe("Fab", function () {
   });
 
   describe("FAB to toolbar", function () {
-    var toolbarFAB;
+    let toolbarFAB;
 
     beforeEach(function() {
       toolbarFAB = document.querySelector('.fixed-action-btn.toolbar');
@@ -45,8 +45,8 @@ describe("Fab", function () {
     });
 
     it("should open correctly", function (done) {
-      var ul = toolbarFAB.querySelector('ul');
-      var ulStyle = getComputedStyle(ul);
+      let ul = toolbarFAB.querySelector('ul');
+      let ulStyle = getComputedStyle(ul);
       expect(ulStyle.getPropertyValue('visibility')).toEqual('hidden', 'FAB menu div should be hidden initially');
 
 

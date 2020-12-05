@@ -9,7 +9,7 @@ describe("Carousel", function () {
 
   describe("carousel plugin", function () {
     it("No wrap next and prev should not overflow", function (done) {
-      noWrap = M.Carousel.init(
+      let noWrap = M.Carousel.init(
         document.querySelector('#slider-no-wrap'), { noWrap: true }
       );
       noWrap.prev();

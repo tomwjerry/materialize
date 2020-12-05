@@ -2,7 +2,7 @@
 describe('Dropdown Plugin', function () {
   
   describe('Dropdown basic functions', function () {
-    var normalDropdown;
+    let normalDropdown;
     beforeEach(async function () {      
       await XloadFixtures(['dropdown/dropdownFixture.html']);
       M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
@@ -12,20 +12,17 @@ describe('Dropdown Plugin', function () {
     });
 
     it('should open and close programmatically', function (done) {
-      var dropdown1 = document.querySelector('#dropdown1');
+      let dropdown1 = document.querySelector('#dropdown1');
       normalDropdown = document.querySelector('#dropdownActivator');
-      var dropdown1Style = getComputedStyle(dropdown1);
 
-      expect(dropdown1Style.getPropertyValue('display')).toEqual('none', 'Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(dropdown1).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
       M.Dropdown.getInstance(normalDropdown).open();
       setTimeout(function () {
-        dropdown1Style = getComputedStyle(dropdown1);
-        expect(dropdown1Style.getPropertyValue('display')).toEqual('block', 'Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(dropdown1).toBeVisible('Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
         M.Dropdown.getInstance(normalDropdown).close();
 
         setTimeout(function () {
-          dropdown1Style = getComputedStyle(dropdown1);
-          expect(dropdown1Style.getPropertyValue('display')).toEqual('none', 'Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
+          expect(dropdown1).toBeHidden('Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
           done();
         }, 400);
       }, 400);
@@ -33,49 +30,43 @@ describe('Dropdown Plugin', function () {
 
     it('should close dropdown on document click if programmatically opened', function (done) {
       normalDropdown = document.querySelector('#dropdownActivator');
-      var dropdown1Style = getComputedStyle(dropdown1);
 
-      expect(dropdown1Style.getPropertyValue('display')).toEqual('none', 'Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(dropdown1).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       M.Dropdown.getInstance(normalDropdown).open();
 
       setTimeout(function () {
-        dropdown1Style = getComputedStyle(dropdown1);
-        expect(dropdown1Style.getPropertyValue('display')).toEqual('block', 'Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(dropdown1).toBeVisible('Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
         click(document.body);
 
         setTimeout(function () {
-          dropdown1Style = getComputedStyle(dropdown1);
-          expect(dropdown1Style.getPropertyValue('display')).toEqual('none', 'Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
+          expect(dropdown1).toBeHidden('Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
           done();
         }, 400);
       }, 400);
     });
 
     it('should bubble events correctly', function (done) {
-      var dropdown2 = document.querySelector('#dropdown2');
+      let dropdown2 = document.querySelector('#dropdown2');
       normalDropdown = document.querySelector('#dropdownBubble');
-      var dropdown2Style = getComputedStyle(dropdown2);
 
-      expect(dropdown2Style.getPropertyValue('display')).toEqual('none', 'Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(dropdown2).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(normalDropdown.querySelector('i'));
 
       setTimeout(function () {
-        dropdown2Style = getComputedStyle(dropdown2);
-        expect(dropdown2Style.getPropertyValue('display')).toEqual('block', 'Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(dropdown2).toBeVisible('Should be shown after dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
         click(document.body);
 
         setTimeout(function () {
-          dropdown2Style = getComputedStyle(dropdown2);
-          expect(dropdown2Style.getPropertyValue('display')).toEqual('none', 'Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
+          expect(dropdown2).toBeHidden('Should be hidden after dropdown is closed.'); //TODO replace with alternative for deprecated jasmine-jquery
           done();
         }, 400);
       }, 400);
     });
 
     it('hovered should destroy itself', function (done) {
-      var dropdownTrigger = document.querySelector('#dropdownDestroyTrigger');
+      let dropdownTrigger = document.querySelector('#dropdownDestroyTrigger');
       M.Dropdown.getInstance(dropdownTrigger).destroy();
       M.Dropdown.init(dropdownTrigger, { hover: true });
 
@@ -105,8 +96,7 @@ describe('Dropdown Plugin', function () {
       setTimeout(function () {
         trigger = M.Dropdown.getInstance(target).el
         dropdown = M.Dropdown.getInstance(target).dropdownEl;
-        var dropdownElStyle = getComputedStyle(M.Dropdown.getInstance(target).dropdownEl);
-        expect(dropdownElStyle.getPropertyValue('display')).toEqual('block', 'because the mouse is hovering'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(dropdown).toBeVisible('because the mouse is hovering'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(dropdown.top == trigger.top)
           .toBeTruthy('because the dropdown top should be at the trigger top');
         done();

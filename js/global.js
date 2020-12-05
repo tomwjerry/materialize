@@ -175,7 +175,7 @@ M.escapeHash = function(hash) {
  */
 M.getClosestAncestor = function(el, condition) {
   let ancestor = el.parentNode;
-  while (ancestor !== null && !$(ancestor).is(document)) {
+  while (ancestor !== null && !ancestor == document) {
     if (condition(ancestor)) {
       return ancestor;
     }
@@ -295,7 +295,7 @@ M.checkPossibleAlignments = function(el, container, bounding, offset) {
   let scrolledX = bounding.left - scrollLeft;
   let scrolledYTopEdge = bounding.top - scrollTop;
   let scrolledYBottomEdge = bounding.top + elOffsetRect.height - scrollTop;
-  
+
   // Check for container and viewport for left, right, top, and bottom
   if (!containerAllowsOverflow) {
     canAlign.spaceOnRight = containerWidth - scrolledX - bounding.width;
@@ -312,7 +312,7 @@ M.checkPossibleAlignments = function(el, container, bounding, offset) {
     canAlign.spaceOnTop = elOffsetRect.bottom - offset;
     canAlign.overflowTop = bounding.height - canAlign.spaceOnTop;
   }
-  
+
   //If the bounding box would not be cut off, then it can be aligned in that position.
   canAlign.left = canAlign.spaceOnRight >= 0;
   canAlign.right = canAlign.spaceOnLeft >= 0;

@@ -19,15 +19,10 @@ describe("Autocomplete Plugin", function () {
   });
 
   describe("Autocomplete", function () {
-    // var browserSelect, normalInput, normalDropdown;
-
-    // beforeEach(function() {
-    //   browserSelect = $('select.normal');
-    // });
 
     it("should work with multiple initializations", function (done) {
-      var normal = document.querySelector('#normal-autocomplete');
-      var limited = M.Autocomplete.getInstance(normal);
+      let normal = document.querySelector('#normal-autocomplete');
+      let limited = M.Autocomplete.getInstance(normal);
       setTimeout(function() {
         limited.updateData({ "hi": null });
         limited.updateData({ "hi": null });
@@ -40,7 +35,7 @@ describe("Autocomplete Plugin", function () {
           }
         });
 
-        var autocompleteEl = normal.parentNode.querySelectorAll('.autocomplete-content');
+        let autocompleteEl = normal.parentNode.querySelectorAll('.autocomplete-content');
 
         expect(autocompleteEl.length).toEqual(1, 'Should dynamically generate autocomplete structure.');
         done();
@@ -48,14 +43,14 @@ describe("Autocomplete Plugin", function () {
     });
 
     it("should limit results if option is set", function (done) {
-      var limited = document.querySelector('#limited-autocomplete');
-      var data = {};
-      for (var i = 100; i >= 0; i--) {
-        var randString = 'a' + Math.random().toString(36).substring(2);
+      let limited = document.querySelector('#limited-autocomplete');
+      let data = {};
+      for (let i = 100; i >= 0; i--) {
+        let randString = 'a' + Math.random().toString(36).substring(2);
         data[randString] = null;
       }
 
-      var limitedInstance = M.Autocomplete.getInstance(limited);
+      let limitedInstance = M.Autocomplete.getInstance(limited);
       limitedInstance.updateData(data);
       limitedInstance.options.limit = 20;
 
@@ -64,7 +59,7 @@ describe("Autocomplete Plugin", function () {
       keyup(limited, 65);
 
       setTimeout(function() {
-        var autocompleteEl = limitedInstance.container;
+        let autocompleteEl = limitedInstance.container;
         expect(autocompleteEl.children.length).toEqual(20, 'Results should be at max the set limit');
         done();
       }, 200);
@@ -72,8 +67,8 @@ describe("Autocomplete Plugin", function () {
     });
 
     it("should filter results", function (done) {
-      var normal = document.querySelector('#normal-autocomplete');
-      var autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
+      let normal = document.querySelector('#normal-autocomplete');
+      let autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
 
       normal.focus();
       normal.value = 'e';
@@ -86,8 +81,8 @@ describe("Autocomplete Plugin", function () {
     });
 
     it("should display the correct text", function (done) {
-      var normal = document.querySelector('#normal-autocomplete');
-      var normalInstance = M.Autocomplete.getInstance(normal);
+      let normal = document.querySelector('#normal-autocomplete');
+      let normalInstance = M.Autocomplete.getInstance(normal);
       normalInstance.updateData({
         "Apple": null,
         "Microsoft": null,
@@ -98,17 +93,17 @@ describe("Autocomplete Plugin", function () {
         // if false record is not displayed.
         return true;
       };
-      var autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
+      let autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
 
       normal.focus();
       normal.value = 'e';
       keyup(normal, 69);
 
-      var labels = ["Apple", "Microsoft", "Google"];
+      let labels = ["Apple", "Microsoft", "Google"];
 
       setTimeout(function () {
         for (i = 0; i < autocompleteEl.children.length; i++) {
-          var found = labels.indexOf(autocompleteEl.children[i].innerText.trim())
+          let found = labels.indexOf(autocompleteEl.children[i].innerText.trim())
           expect(found).toBeGreaterThan(-1, 'results should be in the initialized data')
         }
         done();
@@ -116,8 +111,8 @@ describe("Autocomplete Plugin", function () {
     });
 
     it("should sort results with matches at the top", function (done) {
-      var normal = document.querySelector('#normal-autocomplete');
-      var normalInstance = M.Autocomplete.getInstance(normal);
+      let normal = document.querySelector('#normal-autocomplete');
+      let normalInstance = M.Autocomplete.getInstance(normal);
       normalInstance.updateData({
         "Apple": null,
         "Microsoft": null,
@@ -128,13 +123,13 @@ describe("Autocomplete Plugin", function () {
         // if false record is not displayed.
         return true;
       };
-      var autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
+      let autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
 
       normal.focus();
       normal.value = 'mi';
       keyup(normal, 69);
 
-      var labels = ["Microsoft", "Apple", "Google"];
+      let labels = ["Microsoft", "Apple", "Google"];
 
       setTimeout(function () {
         for (i = 0; i < autocompleteEl.children.length; i++) {
@@ -145,8 +140,8 @@ describe("Autocomplete Plugin", function () {
     });
 
     it("should allow for custom filtered results", function (done) {
-      var normal = document.querySelector('#normal-autocomplete');
-      var normalInstance = M.Autocomplete.getInstance(normal);
+      let normal = document.querySelector('#normal-autocomplete');
+      let normalInstance = M.Autocomplete.getInstance(normal);
       normalInstance.updateData({
         "Apple": null,
         "Microsoft": null,
@@ -157,7 +152,7 @@ describe("Autocomplete Plugin", function () {
         // if false record is not displayed.
         return true;
       };
-      var autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
+      let autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
 
       normal.focus();
       normal.value = 'foo';
@@ -170,8 +165,8 @@ describe("Autocomplete Plugin", function () {
     });
 
     it("Should update data to be processed.", function (done) {
-      var normal = document.querySelector('#normal-autocomplete');
-      var instance = M.Autocomplete.getInstance(normal);
+      let normal = document.querySelector('#normal-autocomplete');
+      let instance = M.Autocomplete.getInstance(normal);
 
       instance.updateData({
         "Apple": null,
@@ -179,7 +174,7 @@ describe("Autocomplete Plugin", function () {
         "Google": 'https://placehold.it/250x250',
         "Oracle": null
       });
-      var autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
+      let autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
 
       normal.focus();
       normal.value = 'e';
@@ -192,8 +187,8 @@ describe("Autocomplete Plugin", function () {
     });
 
     it("should open correctly from typing", function (done) {
-      var normal = document.querySelector('#normal-autocomplete');
-      var autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
+      let normal = document.querySelector('#normal-autocomplete');
+      let autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
 
       normal.focus();
       normal.value = 'e';
@@ -206,8 +201,8 @@ describe("Autocomplete Plugin", function () {
     });
 
     it("should open correctly from keyboard focus", function (done) {
-      var normal = document.querySelector('#normal-autocomplete');
-      var autocompleteEl = normal.parentNode. querySelector('.autocomplete-content');
+      let normal = document.querySelector('#normal-autocomplete');
+      let autocompleteEl = normal.parentNode. querySelector('.autocomplete-content');
 
       normal.value = 'e';
       keyup(normal, 9);

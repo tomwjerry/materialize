@@ -1,4 +1,4 @@
-jasmine.getFixtures().fixturesPath = 'http://localhost:8000/tests/spec';
+//jasmine.getFixtures().fixturesPath = 'http://localhost:8000/tests/spec';
 // jasmine.getEnv().configure({random: false})
 
 // jasmine-jquery matchers needing replacements:
@@ -69,6 +69,27 @@ function XunloadFixtures() {
 
 
 beforeEach(function () {
+  var matchers = {
+    toExist: function() {
+      return !!this.actual;
+    },
+    toBeHidden: function() {
+      let style = getComputedStyle(this.actual);
+      return style.getPropertyValue('display') == 'none';
+    },
+    toBeVisible: function() {
+      let style = getComputedStyle(this.actual);
+      return style.getPropertyValue('display') == 'block';
+    },
+    toHaveClass: function(classCompare) {
+      return this.actual.classList.contains(classCompare);
+    },
+    toNotHaveClass: function(classCompare) {
+      return !this.actual.classList.contains(classCompare);
+    }
+  };
+
+  this.addMatchers(matchers);
 
   /**
    * Creates standard click event on DOM element
@@ -120,6 +141,12 @@ beforeEach(function () {
   window.focus = function (el) {
     var ev = document.createEvent("Events");
     ev.initEvent("focus", true, true);
+    el.dispatchEvent(ev);
+  }
+
+  window.blur = function (el) {
+    var ev = document.createEvent("Events");
+    ev.initEvent("blur", true, true);
     el.dispatchEvent(ev);
   }
 });

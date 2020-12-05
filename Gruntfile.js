@@ -8,13 +8,9 @@ module.exports = function(grunt) {
       components: {
         src: ['bin/materialize.js'],
         options: {
-          vendor: [
-            'node_modules/jquery/dist/jquery.min.js',
-            'node_modules/jasmine-jquery/lib/jasmine-jquery.js'
-          ],
           styles: 'bin/materialize.css',
           //specs: 'tests/spec/**/*Spec.js',
-          specs: 'tests/spec/autocomplete/autocompleteSpec.js',
+          specs: 'tests/spec/select/selectSpec.js',
           helpers: 'tests/spec/helper.js',
           keepRunner: true,
           page: {
@@ -23,7 +19,6 @@ module.exports = function(grunt) {
                 height: 735
             }
           }
-          //helpers: 'test/spec/*.js'
         }
       }
     },

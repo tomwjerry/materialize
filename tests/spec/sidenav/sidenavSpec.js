@@ -83,19 +83,19 @@ describe("Sidenav Plugin", function () {
 
       click(normalActivator[0]);
 
-      expect(openStart).toEqual(true, 'Open start should fire immediately after open');
-      expect(openEnd).toEqual(false, 'Open end should not fire immediately after open');
+      expect(openStart).toBeTrue('Open start should fire immediately after open');
+      expect(openEnd).toBeFalse('Open end should not fire immediately after open');
 
       setTimeout(function() {
-        expect(openEnd).toEqual(true, 'Open end should fire after open animation');
+        expect(openEnd).toBeTrue('Open end should fire after open animation');
 
         click(overlay[0]);
 
-        expect(closeStart).toEqual(true, 'Close start should fire immediately after close');
-        expect(closeEnd).toEqual(false, 'Close end should not fire immediately after close');
+        expect(closeStart).toBeTrue('Close start should fire immediately after close');
+        expect(closeEnd).toBeFalse('Close end should not fire immediately after close');
 
         setTimeout(function() {
-          expect(closeEnd).toEqual(true, 'Close end should fire after close animation');
+          expect(closeEnd).toBeTrue('Close end should fire after close animation');
 
           done();
         }, 400);
@@ -108,15 +108,15 @@ describe("Sidenav Plugin", function () {
       var overlay = $($('#slide-out')[0].M_Sidenav._overlay);
       var dragTarget = $($('#slide-out')[0].M_Sidenav.dragTarget);
       expect(M.Sidenav._sidenavs.length).toEqual(1, 'one sidenav initialized');
-      expect($.contains(document, overlay[0])).toEqual(true, 'overlay should be in DOM');
-      expect($.contains(document, dragTarget[0])).toEqual(true, 'dragTarget should be in DOM');
+      expect($.contains(document, overlay[0])).toBeTrue('overlay should be in DOM');
+      expect($.contains(document, dragTarget[0])).toBeTrue('dragTarget should be in DOM');
       $("#slide-out").sidenav('destroy');
 
 
       setTimeout(function() {
         expect(M.Sidenav._sidenavs.length).toEqual(0, 'sidenav destroyed');
-        expect($.contains(document, overlay[0])).toEqual(false, 'overlay should be deleted');
-        expect($.contains(document, dragTarget[0])).toEqual(false, 'dragTarget should be deleted');
+        expect($.contains(document, overlay[0])).toBeFalse('overlay should be deleted');
+        expect($.contains(document, dragTarget[0])).toBeFalse('dragTarget should be deleted');
         done();
       }, 100);
     });
