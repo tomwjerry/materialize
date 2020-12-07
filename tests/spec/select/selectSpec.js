@@ -20,8 +20,8 @@ describe("Select Plugin", function () {
       normalInput = selectInstance.wrapper.querySelector('input.select-dropdown');
       normalDropdown = selectInstance.wrapper.querySelector('ul.select-dropdown');
 
-      expect(normalInput).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
-      expect(normalDropdown).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(normalInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(normalDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
       expect(normalInput).toBeVisible('Should be visible before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
       expect(normalDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
@@ -88,8 +88,8 @@ describe("Select Plugin", function () {
       multipleInput = selectInstance.wrapper.querySelector('input.select-dropdown');
       multipleDropdown = selectInstance.wrapper.querySelector('ul.select-dropdown');
 
-      expect(multipleInput).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
-      expect(multipleDropdown).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
       expect(multipleInput).toBeVisible('Should be visible before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
       expect(multipleDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
@@ -121,10 +121,10 @@ describe("Select Plugin", function () {
       multipleInput = selectInstance.wrapper.querySelector('input.select-dropdown');
       multipleDropdown = selectInstance.wrapper.querySelector('ul.select-dropdown');
 
-      expect(multipleInput).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
-      expect(multipleDropdown).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
       expect(multipleInput).toBeVisible('Should be visible before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
-      expect(multipleDropdown.toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(multipleDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(multipleInput);
 
@@ -176,10 +176,10 @@ describe("Select Plugin", function () {
         expect(browerSelectOptgroups[i].label).toEqual(optgroups[i].innerText, 'should generate optgroup structure.');
       }
 
-      expect(optInput).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
-      expect(optDropdown).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
       expect(optInput).toBeVisible('Should be visible before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
-      expect(optDropdownStyle).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       click(optInput);
 
@@ -216,8 +216,8 @@ describe("Select Plugin", function () {
         expect(browerSelectOptgroups[i].label).toEqual(optgroups[i].innerText, 'should generate optgroup structure.');
       }
 
-      expect(optInput).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
-      expect(optDropdown).toBeTruthy('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optInput).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(optDropdown).toExist('Should dynamically generate select dropdown structure.'); //TODO replace with alternative for deprecated jasmine-jquery
       expect(optInput).toBeVisible('Should be visible before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
       expect(optDropdown).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 

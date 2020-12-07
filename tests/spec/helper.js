@@ -70,26 +70,77 @@ function XunloadFixtures() {
 
 beforeEach(function () {
   var matchers = {
-    toExist: function() {
-      return !!this.actual;
+    toExist: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual) {
+          var result = {};
+          result.pass = util.equals(!!actual, true, customEqualityTesters);
+
+          return result;
+        }
+      };
     },
-    toBeHidden: function() {
-      let style = getComputedStyle(this.actual);
-      return style.getPropertyValue('display') == 'none';
+    toBeHidden: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual) {
+          let style = getComputedStyle(actual);
+          var result = {};
+          result.pass = util.equals(
+            style.getPropertyValue('display'),
+            'none',
+            customEqualityTesters
+          );
+
+          return result;
+        }
+      };
     },
-    toBeVisible: function() {
-      let style = getComputedStyle(this.actual);
-      return style.getPropertyValue('display') == 'block';
+    toBeVisible: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual) {
+          let style = getComputedStyle(actual);
+          var result = {};
+          result.pass = util.equals(
+            style.getPropertyValue('display'),
+            'block',
+            customEqualityTesters
+          );
+
+          return result;
+        }
+      };
     },
-    toHaveClass: function(classCompare) {
-      return this.actual.classList.contains(classCompare);
+    toHaveClass: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual, expected) {
+          var result = {};
+          result.pass = util.equals(
+            actual.classList.contains(expected),
+            true,
+            customEqualityTesters
+          );
+
+          return result;
+        }
+      };
     },
-    toNotHaveClass: function(classCompare) {
-      return !this.actual.classList.contains(classCompare);
+    toNotHaveClass: function(util, customEqualityTesters) {
+      return {
+        compare: function(actual, expected) {
+          var result = {};
+          result.pass = util.equals(
+            actual.classList.contains(expected),
+            false,
+            customEqualityTesters
+          );
+
+          return result;
+        }
+      };
     }
   };
 
-  this.addMatchers(matchers);
+  jasmine.addMatchers(matchers);
 
   /**
    * Creates standard click event on DOM element

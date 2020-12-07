@@ -21,7 +21,7 @@ describe( 'Materialbox:', function() {
         let overlayRect = overlay.getBoundingClientRect();
         let windowWidth = window.innerWidth;
         let windowHeight = window.innerHeight;
-        expect(overlay).toBeTruthy('because it is generated on init'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(overlay).toExist('because it is generated on init'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(overlay).toBeVisible('because materialbox was clicked'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(overlayRect.top).toEqual(0);
         expect(overlayRect.left).toEqual(0);
