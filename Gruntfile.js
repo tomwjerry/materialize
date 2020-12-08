@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         options: {
           styles: 'bin/materialize.css',
           //specs: 'tests/spec/**/*Spec.js',
-          specs: 'tests/spec/sidenav/sidenavSpec.js',
+          specs: 'tests/spec/tabs/tabsSpec.js',
           helpers: 'tests/spec/helper.js',
           keepRunner: true,
           page: {
