@@ -9,7 +9,7 @@
 
 const fixturesCache = {};
 const containerId = 'xjasmine-fixtures';
-const fixturesPath = 'http://localhost:8000/tests/spec';
+const fixturesPath = 'http://localhost:9001/tests/spec';
 
 async function XloadFixtures(fixtureUrls) {
   // console.log(JSON.stringify(fixturesCache))
@@ -69,11 +69,11 @@ function XunloadFixtures() {
 
 
 beforeEach(function () {
-  var matchers = {
+  let matchers = {
     toExist: function(util, customEqualityTesters) {
       return {
         compare: function(actual) {
-          var result = {};
+          let result = {};
           result.pass = util.equals(!!actual, true, customEqualityTesters);
 
           return result;
@@ -83,21 +83,13 @@ beforeEach(function () {
     toBeHidden: function(util, customEqualityTesters) {
       return {
         compare: function(actual) {
-          let style = getComputedStyle(actual);
-          var result = {};
+          const style = getComputedStyle(actual);
+          let result = {};
           result.pass = util.equals(
             style.getPropertyValue('display'),
             'none',
             customEqualityTesters
           );
-
-          if (result.pass) {
-            result.pass = util.equals(
-              style.getPropertyValue('visibility'),
-              'hidden',
-              customEqualityTesters
-            );
-          }
 
           return result;
         }
@@ -106,8 +98,8 @@ beforeEach(function () {
     toBeVisible: function(util, customEqualityTesters) {
       return {
         compare: function(actual) {
-          let style = getComputedStyle(actual);
-          var result = {};
+          const style = getComputedStyle(actual);
+          let result = {};
           result.pass = !util.equals(
             style.getPropertyValue('display'),
             'none',
@@ -129,7 +121,7 @@ beforeEach(function () {
     toHaveClass: function(util, customEqualityTesters) {
       return {
         compare: function(actual, expected) {
-          var result = {};
+          let result = {};
           result.pass = util.equals(
             actual.classList.contains(expected),
             true,
@@ -143,7 +135,7 @@ beforeEach(function () {
     toNotHaveClass: function(util, customEqualityTesters) {
       return {
         compare: function(actual, expected) {
-          var result = {};
+          let result = {};
           result.pass = util.equals(
             actual.classList.contains(expected),
             false,
@@ -162,7 +154,7 @@ beforeEach(function () {
    * Creates standard click event on DOM element
    */
   window.click = function (elem) {
-    var evt = document.createEvent('MouseEvent');
+    let evt = document.createEvent('MouseEvent');
     evt.initMouseEvent('click', {
       bubbles: true,
       cancelable: true,
@@ -173,7 +165,7 @@ beforeEach(function () {
   };
 
   window.mouseenter = function (el) {
-    var ev = document.createEvent("MouseEvent");
+    let ev = document.createEvent("MouseEvent");
     ev.initMouseEvent(
       "mouseenter",
       true /* bubble */, true /* cancelable */,
@@ -185,8 +177,21 @@ beforeEach(function () {
     el.dispatchEvent(ev);
   };
 
+  window.mouseleave = function (el) {
+    let ev = document.createEvent("MouseEvent");
+    ev.initMouseEvent(
+      "mouseleave",
+      true /* bubble */, true /* cancelable */,
+      window, null,
+      0, 0, 0, 0, /* coordinates */
+      false, false, false, false, /* modifier keys */
+      0 /*left*/, null
+    );
+    el.dispatchEvent(ev);
+  };
+
   window.keydown = function (el, keycode) {
-    var ev = document.createEvent("Events");
+    let ev = document.createEvent("Events");
     ev.initEvent("keydown", true, true);
 
     ev.keyCode = keycode;
@@ -196,7 +201,7 @@ beforeEach(function () {
   }
 
   window.keyup = function (el, keycode) {
-    var ev = document.createEvent("Events");
+    let ev = document.createEvent("Events");
     ev.initEvent("keyup", true, true);
 
     ev.keyCode = keycode;
@@ -206,13 +211,13 @@ beforeEach(function () {
   }
 
   window.focus = function (el) {
-    var ev = document.createEvent("Events");
+    let ev = document.createEvent("Events");
     ev.initEvent("focus", true, true);
     el.dispatchEvent(ev);
   }
 
   window.blur = function (el) {
-    var ev = document.createEvent("Events");
+    let ev = document.createEvent("Events");
     ev.initEvent("blur", true, true);
     el.dispatchEvent(ev);
   }

@@ -70,7 +70,7 @@ describe( "Collapsible Plugin", function () {
       let bodies = expandable.querySelectorAll('.collapsible-body');
 
       expect(openCallback).toBeFalse('because open callback not yet fired');
-      expect(closeCallback).toBeTrue(('because close callback not yet fired');
+      expect(closeCallback).toBeFalse('because close callback not yet fired');
 
       for (let i = 0; i < bodies.length; i++) {
         expect(bodies[i]).toBeHidden('because collapsible bodies should be hidden initially.'); //TODO replace with alternative for deprecated jasmine-jquery
@@ -112,7 +112,7 @@ describe( "Collapsible Plugin", function () {
       click(firstHeader);
 
       setTimeout(function() {
-        expect(firstStyles).toBeVisible('because accordion bodies not visible after being opened.'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(firstBody).toBeVisible('because accordion bodies not visible after being opened.'); //TODO replace with alternative for deprecated jasmine-jquery
         click(secondHeader);
 
         setTimeout(function() {
@@ -135,7 +135,6 @@ describe( "Collapsible Plugin", function () {
       expect(firstBody).toBeHidden('because accordion bodies should be hidden initially.'); //TODO replace with alternative for deprecated jasmine-jquery
 
       // Expect margin to be > 0 because not popped out.
-      let listItems = popout.querySelectorAll('li');
       for (let i = 0; i < listItems.length; i++) {
         let listItemStyles = getComputedStyle(listItems[i]);
         let marginLeft = parseInt(listItemStyles.getPropertyValue('margin-left'));

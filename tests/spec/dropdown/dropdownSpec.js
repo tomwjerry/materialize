@@ -2,7 +2,6 @@
 describe('Dropdown Plugin', function () {
   
   describe('Dropdown basic functions', function () {
-    let normalDropdown;
     beforeEach(async function () {      
       await XloadFixtures(['dropdown/dropdownFixture.html']);
       M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
@@ -13,7 +12,7 @@ describe('Dropdown Plugin', function () {
 
     it('should open and close programmatically', function (done) {
       let dropdown1 = document.querySelector('#dropdown1');
-      normalDropdown = document.querySelector('#dropdownActivator');
+      let normalDropdown = document.querySelector('#dropdownActivator');
 
       expect(dropdown1).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
       M.Dropdown.getInstance(normalDropdown).open();
@@ -29,7 +28,8 @@ describe('Dropdown Plugin', function () {
     });
 
     it('should close dropdown on document click if programmatically opened', function (done) {
-      normalDropdown = document.querySelector('#dropdownActivator');
+      let dropdown1 = document.querySelector('#dropdown1');
+      let normalDropdown = document.querySelector('#dropdownActivator');
 
       expect(dropdown1).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
@@ -48,7 +48,7 @@ describe('Dropdown Plugin', function () {
 
     it('should bubble events correctly', function (done) {
       let dropdown2 = document.querySelector('#dropdown2');
-      normalDropdown = document.querySelector('#dropdownBubble');
+      let normalDropdown = document.querySelector('#dropdownBubble');
 
       expect(dropdown2).toBeHidden('Should be hidden before dropdown is opened.'); //TODO replace with alternative for deprecated jasmine-jquery
 
@@ -90,12 +90,12 @@ describe('Dropdown Plugin', function () {
     });
 
     it('should cover trigger element when coverTrigger is true', function (done) {
-      target = document.querySelector('#test-1');
+      let target = document.querySelector('#test-1');
       M.Dropdown.init(target, { hover: true });
       mouseenter(target);
       setTimeout(function () {
-        trigger = M.Dropdown.getInstance(target).el
-        dropdown = M.Dropdown.getInstance(target).dropdownEl;
+        let trigger = M.Dropdown.getInstance(target).el
+        let dropdown = M.Dropdown.getInstance(target).dropdownEl;
         expect(dropdown).toBeVisible('because the mouse is hovering'); //TODO replace with alternative for deprecated jasmine-jquery
         expect(dropdown.top == trigger.top)
           .toBeTruthy('because the dropdown top should be at the trigger top');
@@ -104,12 +104,12 @@ describe('Dropdown Plugin', function () {
     });
 
     it('should not cover trigger element when coverTrigger is false', function (done) {
-      target = document.querySelector('#test-1');
+      let target = document.querySelector('#test-1');
       M.Dropdown.init(target, { hover: true, coverTrigger: false });
       mouseenter(target);
       setTimeout(function () {
-        trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
-        dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
+        let trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
+        let dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
         expect(dropdown.top == trigger.bottom)
           .toBeTruthy('because the dropdown top should be at the trigger bottom');
         done();
@@ -117,12 +117,12 @@ describe('Dropdown Plugin', function () {
     });
 
     it('should cover trigger element when coverTrigger is true and alignment is bottom', function (done) {
-      target = document.querySelector('#test-2');
+      let target = document.querySelector('#test-2');
       M.Dropdown.init(target, { hover: true });
       mouseenter(target);
       setTimeout(function () {
-        trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
-        dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
+        let trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
+        let dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
         expect(dropdown.bottom == trigger.bottom)
           .toBeTruthy('because the dropdown bottom should be aligned with the bottom of the trigger');
         done();
@@ -130,12 +130,12 @@ describe('Dropdown Plugin', function () {
     });
 
     it('should not cover trigger element when coverTrigger is false and alignment is bottom', function (done) {
-      target = document.querySelector('#test-2');
+      let target = document.querySelector('#test-2');
       M.Dropdown.init(target, { hover: true, coverTrigger: false });
       mouseenter(target);
       setTimeout(function () {
-        trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
-        dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
+        let trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
+        let dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
         expect(dropdown.bottom == trigger.top)
           .toBeTruthy('because the dropdown bottom should be aligned with the top of the trigger');
         done();
@@ -143,23 +143,23 @@ describe('Dropdown Plugin', function () {
     });
 
     it('should be wide as the content when constrainWidth is false', function (done) {
-      target = document.querySelector('#test-1');
+      let target = document.querySelector('#test-1');
       M.Dropdown.init(target, { hover: true, constrainWidth: false });
       mouseenter(target);
       setTimeout(function () {
-        trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
-        dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
+        let trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
+        let dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
         expect(dropdown.width).toBeGreaterThan(trigger.width, 'because it should expand to fit the content');
         done();
       }, 200);
     });
 
     it('should be scrollable when the list is long and the content overflows', function (done) {
-      target = document.querySelector('#test-3');
+      let target = document.querySelector('#test-3');
       M.Dropdown.init(target, { hover: true });
       mouseenter(target);
       setTimeout(function () {
-        dropdown = M.Dropdown.getInstance(target);
+        let dropdown = M.Dropdown.getInstance(target);
         expect(dropdown.dropdownEl.scrollHeight)
           .toBeGreaterThan(dropdown.dropdownEl.offsetHeight, 'because the dropdown should be truncated to fit on the screen');
         expect(dropdown.isScrollable).toBeTruthy('because the dropdown container must be scrollable when truncated');
@@ -172,7 +172,7 @@ describe('Dropdown Plugin', function () {
     
     beforeEach(async function () {
       await XloadFixtures(['dropdown/dropdownFixtureAdvanced.html']);
-      modal1 = document.querySelector('#modal1');
+      let modal1 = document.querySelector('#modal1');
       M.Modal.init(modal1);
       click(document.querySelector('#modal1-trigger'));
     });
@@ -182,13 +182,12 @@ describe('Dropdown Plugin', function () {
 
     it('should cover trigger element when coverTrigger is true', function (done) {
       setTimeout(function(){
-        modalBox = document.querySelector('#mod\al1-content').getBoundingClientRect();
-        target = document.querySelector('#test-modal1');
+        let target = document.querySelector('#test-modal1');
         M.Dropdown.init(target, { hover: true });
         mouseenter(target);
         setTimeout(function(){
-          trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
-          dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
+          let trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
+          let dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
           expect(dropdown.top).toBeCloseTo(trigger.top, -1, 'because the dropdown top should be close to the trigger top')
           done();
         }, 200);
@@ -197,12 +196,12 @@ describe('Dropdown Plugin', function () {
 
     it('should not cover trigger element when coverTrigger is false', function (done) {
       setTimeout(function(){
-        target = document.querySelector('#test-modal1');
+        let target = document.querySelector('#test-modal1');
         M.Dropdown.init(target, { hover: true, coverTrigger: false });
         mouseenter(target);
         setTimeout(function(){
-          trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
-          dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
+          let trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
+          let dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
           expect(dropdown.top).toBeCloseTo(trigger.bottom, -1, 'because the dropdown top should be close to the trigger bottom')
           done();
         }, 200);
@@ -211,13 +210,13 @@ describe('Dropdown Plugin', function () {
 
     it('should cover trigger element when coverTrigger is true and alignment is bottom', function (done) {
       setTimeout(function(){
-        target = document.querySelector('#test-modal1');
-        M.Dropdown.init(target, { hover: true });
-        document.querySelector('#modal1-top-spacer').style.height = '300px';
+        let target = document.querySelector('#test-modal1');
+        let targetDropdown = M.Dropdown.init(target, { hover: true, alignment: 'bottom' });
+        document.querySelector('#modal1-top-spacer').style.height = '600px';
         mouseenter(target);
         setTimeout(function(){
-          trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
-          dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
+          let trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
+          let dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
           expect(dropdown.bottom).toBeCloseTo(trigger.bottom, -1, 'because the dropdown bottom should be close to the trigger bottom')
           done();
         }, 200);
@@ -226,13 +225,13 @@ describe('Dropdown Plugin', function () {
 
     it('should not cover trigger element when coverTrigger is false and alignment is bottom', function (done) {
       setTimeout(function(){
-        target = document.querySelector('#test-modal1');
-        M.Dropdown.init(target, { hover: true, coverTrigger: false });
-        document.querySelector('#modal1-top-spacer').style.height = '300px';
+        let target = document.querySelector('#test-modal1');
+        M.Dropdown.init(target, { hover: true, coverTrigger: false, alignment: 'bottom' });
+        document.querySelector('#modal1-top-spacer').style.height = '600px';
         mouseenter(target);
         setTimeout(function(){
-          trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
-          dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
+          let trigger = M.Dropdown.getInstance(target).el.getBoundingClientRect();
+          let dropdown = M.Dropdown.getInstance(target).dropdownEl.getBoundingClientRect();
           expect(dropdown.bottom).toBeCloseTo(trigger.top, -1, 'because the dropdown bottom should be close to the trigger top')
           done();
         }, 200);
