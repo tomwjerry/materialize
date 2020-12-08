@@ -91,6 +91,14 @@ beforeEach(function () {
             customEqualityTesters
           );
 
+          if (result.pass) {
+            result.pass = util.equals(
+              style.getPropertyValue('visibility'),
+              'hidden',
+              customEqualityTesters
+            );
+          }
+
           return result;
         }
       };
@@ -100,11 +108,19 @@ beforeEach(function () {
         compare: function(actual) {
           let style = getComputedStyle(actual);
           var result = {};
-          result.pass = util.equals(
+          result.pass = !util.equals(
             style.getPropertyValue('display'),
-            'block',
+            'none',
             customEqualityTesters
           );
+
+          if (result.pass) {
+            result.pass = util.equals(
+              style.getPropertyValue('visibility'),
+              'visible',
+              customEqualityTesters
+            );
+          }
 
           return result;
         }
