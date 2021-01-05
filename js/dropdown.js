@@ -390,23 +390,10 @@
       let triggerBRect = this.el.getBoundingClientRect();
       let dropdownBRect = this.dropdownEl.getBoundingClientRect();
 
-      let idealHeight;
-      let idealWidth;
-      let idealXPos;
-      let idealYPos;
-      let shift;
-
-      if (this.options.container == document.body) {
-        idealHeight = dropdownBRect.height;
-        idealWidth = triggerBRect.width;
-        idealXPos = triggerBRect.left + window.scrollX;
-        idealYPos =  triggerBRect.top + window.scrollY;
-      } else {
-        idealHeight = dropdownBRect.height;
-        idealWidth = dropdownBRect.width;
-        idealXPos = triggerBRect.left - dropdownBRect.left;
-        idealYPos = triggerBRect.top - dropdownBRect.top;
-      }
+      let idealHeight = dropdownBRect.height;
+      let idealWidth = dropdownBRect.width;
+      let idealXPos = triggerBRect.left - dropdownBRect.left;
+      let idealYPos = triggerBRect.top - dropdownBRect.top;
 
       let dropdownBounds = {
         left: idealXPos,
@@ -428,21 +415,23 @@
 
       // Reset isScrollable
       this.isScrollable = false;
+
       if (!alignments.top) {
         if (alignments.bottom) {
           verticalAlignment = 'bottom';
-          idealYPos += this.options.coverTrigger ? triggerBRect.height : triggerBRect.height * - 1; //undo the offset for top alignment
         } else {
           this.isScrollable = true;
+
           // Determine which side has most space and cutoff at correct height
           idealHeight -= 20; // Add padding when cutoff
           if (alignments.spaceOnTop > alignments.spaceOnBottom) {
             verticalAlignment = 'bottom';
-            idealHeight = idealHeight - alignments.overflowTop - (this.options.coverTrigger ? 0 : triggerBRect.height * 2); //double to compensate for adding it by default
-            idealYPos -= (this.options.coverTrigger ? 0 : triggerBRect.height);
-            idealYPos += (this.options.coverTrigger ? triggerBRect.height : 0);
+            idealHeight += alignments.spaceOnTop;
+            idealYPos -= this.options.coverTrigger
+              ? alignments.spaceOnTop - 20
+              : alignments.spaceOnTop - 20 + triggerBRect.height;
           } else {
-            idealHeight = idealHeight - alignments.overflowBottom;
+            idealHeight += alignments.spaceOnBottom;
           }
         }
       }
@@ -466,7 +455,8 @@
       }
 
       if (verticalAlignment === 'bottom') {
-        idealYPos = idealYPos - idealHeight;
+        idealYPos =
+          idealYPos - dropdownBRect.height + (this.options.coverTrigger ? triggerBRect.height : 0);
       }
       if (horizontalAlignment === 'right') {
         idealXPos = idealXPos - dropdownBRect.width + triggerBRect.width;
@@ -549,15 +539,10 @@
           ? this.dropdownEl.offsetParent
           : this.dropdownEl.parentNode;
       }
-      if ($(closestOverflowParent).css('position') === 'static' && this.options.container != document.body){
+      if ($(closestOverflowParent).css('position') === 'static')
         $(closestOverflowParent).css('position', 'relative');
-      }
-      
+
       this._moveDropdown(closestOverflowParent);
-      
-      let closestZ = M.getClosestAncestor(this.el, (ancestor) => {
-        return $(ancestor).css('z-index') !== "auto";
-      })
 
       // Set width before calculating positionInfo
       let idealWidth = this.options.constrainWidth
@@ -573,9 +558,6 @@
       this.dropdownEl.style.transformOrigin = `${
         positionInfo.horizontalAlignment === 'left' ? '0' : '100%'
       } ${positionInfo.verticalAlignment === 'top' ? '0' : '100%'}`;
-      if (closestZ) {
-        this.dropdownEl.style.zIndex = parseInt(closestZ.style.zIndex) + 1;
-      }
     }
 
     /**
