@@ -175,7 +175,7 @@ M.escapeHash = function(hash) {
  */
 M.getClosestAncestor = function(el, condition) {
   let ancestor = el.parentNode;
-  while (ancestor !== null && !$(ancestor).is(document)) {
+  while (ancestor !== null && ancestor == document) {
     if (condition(ancestor)) {
       return ancestor;
     }
@@ -446,9 +446,13 @@ M.throttle = function(func, wait, options) {
 /* Feature detection */
 var passiveIfSupported = false;
 try {
-    window.addEventListener("test", null, 
-        Object.defineProperty({}, "passive", {
-            get: function() { passiveIfSupported = { passive: false }; }
-        }
-    ));
-} catch(err) {}
+  window.addEventListener(
+    'test',
+    null,
+    Object.defineProperty({}, 'passive', {
+      get: function() {
+        passiveIfSupported = { passive: false };
+      }
+    })
+  );
+} catch (err) {}
