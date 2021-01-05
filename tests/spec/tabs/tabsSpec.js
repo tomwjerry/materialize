@@ -5,10 +5,10 @@ describe("Tabs Plugin", function () {
     beforeEach(async function() {
       await XloadFixtures(['tabs/tabsFixture.html']);
       normalTabs = document.querySelector('.tabs.normal');
-      M.Tabs.init(document.getElementById("normal-tabs"), {});
+      M.Tabs.init(normalTabs, {});
       window.location.hash = "";
       //HACK the tabs init function not fully initializing. it restores state even after element has been removed from DOM, even after using tabInstance.destroy()
-      M.Tabs.getInstance(normalTabs).select('test2')
+      M.Tabs.getInstance(normalTabs).select('test2');
     });
     afterEach(function(){
       XunloadFixtures();
@@ -19,7 +19,7 @@ describe("Tabs Plugin", function () {
       const activeTabHash = activeTab.getAttribute('href');
       const tabLinks = normalTabs.querySelectorAll('.tab a');
       for (let i = 0; i < tabLinks.length; i++) {
-        var tabHash = tabLinks[i].getAttribute('href');
+        let tabHash = tabLinks[i].getAttribute('href');
         if (tabHash === activeTabHash) {
           expect(document.querySelector(tabHash)).toBeVisible('active tab content should be visible by default'); //TODO replace with alternative for deprecated jasmine-jquery
         } else {
@@ -27,7 +27,7 @@ describe("Tabs Plugin", function () {
         }
       }
 
-      var indicator = normalTabs.querySelector('.indicator');
+      let indicator = normalTabs.querySelector('.indicator');
       expect(indicator).toExist('Indicator should be generated'); //TODO replace with alternative for deprecated jasmine-jquery
       // expect(Math.abs(indicator.offset().left - activeTab.offset().left)).toBeLessThan(1, 'Indicator should be at active tab by default.');
     });

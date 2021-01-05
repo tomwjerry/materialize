@@ -1,15 +1,6 @@
-//jasmine.getFixtures().fixturesPath = 'http://localhost:8000/tests/spec';
-// jasmine.getEnv().configure({random: false})
-
-// jasmine-jquery matchers needing replacements:
-// toExist()
-// toBeHidden()
-// toBeVisible()
-// toHaveClass()
-
 const fixturesCache = {};
 const containerId = 'xjasmine-fixtures';
-const fixturesPath = 'http://localhost:9001/tests/spec';
+const fixturesPath = 'http://localhost:8000/tests/spec';
 
 async function XloadFixtures(fixtureUrls) {
   // console.log(JSON.stringify(fixturesCache))
