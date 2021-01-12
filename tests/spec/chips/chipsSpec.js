@@ -25,6 +25,9 @@ describe("Chips", function () {
   describe("chips plugin", function () {
     let chips, input;
 
+    // beforeEach(function() {
+    // });
+
     it("should work with multiple initializations", function () {
       chips = document.querySelector('.chips');
       M.Chips.init(chips);
@@ -51,7 +54,9 @@ describe("Chips", function () {
 
         expect(numChips).toEqual(1, 'one chip should have been added');
 
-        oneChip.children[0].remove();
+        for (let i = oneChip.children.length - 1; i >= 0; i--) {
+          oneChip.children[i].remove();
+        }
         expect(oneChip.innerText).toEqual('one', 'the chip should have value "one"');
 
         done();
@@ -62,14 +67,14 @@ describe("Chips", function () {
     it("should be able to delete chip", function (done) {
       chips = document.querySelector('.chips.chips-initial');
       input = chips.querySelector('input');
-      let numChips = chips.querySelectorAll('.chip').length
+      let numChips = chips.querySelectorAll('.chip').length;
 
       expect(numChips).toEqual(3, '3 initial chips should have been added');
 
       click(chips.querySelector('.chip .close'));
 
       setTimeout(function() {
-        numChips = chips.querySelectorAll('.chip').length
+        numChips = chips.querySelectorAll('.chip').length;
 
         expect(numChips).toEqual(2, 'one chip should have been deleted');
 
@@ -105,27 +110,27 @@ describe("Chips", function () {
       input = chips.querySelector('input');
       input.value = 'Four';
 
-      expect(chipAdd).toBeFalse('callback not yet fired');
-      expect(chipSelect).toBeFalse('callback not yet fired');
-      expect(chipDelete).toBeFalse('callback not yet fired');
+      expect(chipAdd).toEqual(false, 'callback not yet fired');
+      expect(chipSelect).toEqual(false, 'callback not yet fired');
+      expect(chipDelete).toEqual(false, 'callback not yet fired');
 
       keydown(input, 13);
 
       setTimeout(function() {
-        expect(chipAdd).toBeTrue('add callback fired');
+        expect(chipAdd).toEqual(true, 'add callback fired');
         expect(chipAdded.childNodes[0].nodeValue).toEqual('Four', 'add callback provides correct chip element');
 
         click(chips.querySelectorAll('.chip')[1]);
 
         setTimeout(function() {
-          expect(chipSelect).toBeTrue('select callback fired');
+          expect(chipSelect).toEqual(true, 'select callback fired');
           expect(chipSelected.childNodes[0].nodeValue).toEqual('Two', 'select callback provides correct chip element');
 
           click(chips.querySelectorAll('.close')[2]);
 
           setTimeout(function() {
-            expect(chipDelete).toBeTrue('delete callback fired');
-            expect(chipDeleted.childNodes[0].nodeValue).toEqual('Three', 'add callback provides correct chip element');
+            expect(chipDelete).toEqual(true, 'delete callback fired');
+          expect(chipDeleted.childNodes[0].nodeValue).toEqual('Three', 'add callback provides correct chip element');
 
             done();
           }, 100);
@@ -137,4 +142,5 @@ describe("Chips", function () {
   // describe("Chips autocomplete", function () {
 
   // });
+
 });

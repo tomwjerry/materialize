@@ -18,13 +18,13 @@ describe( "Cards", function () {
       let revealDiv = revealCard.querySelector('.card-reveal');
       let activator = revealCard.querySelector('.activator');
 
-      expect(revealDiv).toBeHidden('reveal div should be hidden initially'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(revealDiv).toBeHidden('reveal div should be hidden initially');
 
       setTimeout(function() {
-        activator.click();
+        click(activator);
 
         setTimeout(function() {
-          expect(revealDiv).toBeVisible('reveal did not appear after activator was clicked.'); //TODO replace with alternative for deprecated jasmine-jquery
+          expect(revealDiv).toBeVisible('reveal did not appear after activator was clicked.');
 
           // Check revealDiv covers reveal card.
           let revealDivPositions = revealDiv.getBoundingClientRect();
@@ -37,6 +37,7 @@ describe( "Cards", function () {
           done();
         }, 400);
       }, 400);
+
     });
   });
 
@@ -115,4 +116,5 @@ describe( "Cards", function () {
         .toEqual(largeRect.top + largeRect.height, 'large action should be at bottom of card');
     });
   });
+
 });

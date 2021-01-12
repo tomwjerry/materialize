@@ -1,14 +1,14 @@
 describe("Sidenav Plugin", function () {
+
   beforeEach(async function() {
     await XloadFixtures(['sidenav/sidenavFixture.html']);
   });
-
   afterEach(function(){
     XunloadFixtures();
   });
 
   describe("Sidenav", function () {
-    let normalActivator, normalSidenav;
+    var normalActivator, normalSidenav;
 
     beforeEach(function() {
       normalActivator = document.querySelector('.sidenav-trigger');
@@ -30,18 +30,21 @@ describe("Sidenav Plugin", function () {
 
       expect(M.Sidenav._sidenavs.length).toEqual(1, 'only 1 sidenav initialized after multiple calls on the same element');
 
-      expect(document.querySelectorAll('.drag-target').length).toEqual(1, 'Should generate only one dragTarget.');
+      let dragTarget = document.querySelectorAll('.drag-target');
+      expect(dragTarget.length).toEqual(1, 'Should generate only one dragTarget.');
 
-      expect(document.querySelectorAll('.sidenav-overlay').length).toEqual(1, 'Should generate only one overlay.');
+      let overlay = document.querySelectorAll('.sidenav-overlay');
+      expect(overlay.length).toEqual(1, 'Should generate only one overlay.');
     });
 
     it("should open sidenav from left", function (done) {
       let slideOutSlidenav = M.Sidenav.init(document.querySelector("#slide-out"));
       let sidenavRect = normalSidenav.getBoundingClientRect();
-      let overlay = slideOutSlidenav._overlay;
+      let overlay = document.querySelectorAll('.sidenav-overlay');
+      let dragTarget = document.querySelectorAll('.drag-target');
 
-      expect(document.querySelectorAll('.drag-target').length).toEqual(1, 'Should generate only one dragTarget.');
-      expect(document.querySelectorAll('.sidenav-overlay').length).toEqual(1, 'Should generate only one overlay.');
+      expect(dragTarget.length).toEqual(1, 'Should generate only one dragTarget.');
+      expect(overlay.length).toEqual(1, 'Should generate only one overlay.');
       expect(sidenavRect.left).toEqual(-sidenavRect.width * 1.05, 'Should be hidden before sidenav is opened.');
 
       click(normalActivator);
@@ -50,7 +53,7 @@ describe("Sidenav Plugin", function () {
         sidenavRect = normalSidenav.getBoundingClientRect();
         expect(sidenavRect.left).toEqual(0, 'Should be shown after sidenav is closed.');
 
-        click(overlay);
+        click(slideOutSlidenav._overlay);
 
         done();
       }, 500);
@@ -80,19 +83,19 @@ describe("Sidenav Plugin", function () {
 
       click(normalActivator);
 
-      expect(openStart).toBeTrue('Open start should fire immediately after open');
-      expect(openEnd).toBeFalse('Open end should not fire immediately after open');
+      expect(openStart).toEqual(true, 'Open start should fire immediately after open');
+      expect(openEnd).toEqual(false, 'Open end should not fire immediately after open');
 
       setTimeout(function() {
-        expect(openEnd).toBeTrue('Open end should fire after open animation');
+        expect(openEnd).toEqual(true, 'Open end should fire after open animation');
 
         click(overlay);
 
-        expect(closeStart).toBeTrue('Close start should fire immediately after close');
-        expect(closeEnd).toBeFalse('Close end should not fire immediately after close');
+        expect(closeStart).toEqual(true, 'Close start should fire immediately after close');
+        expect(closeEnd).toEqual(false, 'Close end should not fire immediately after close');
 
         setTimeout(function() {
-          expect(closeEnd).toBeTrue('Close end should fire after close animation');
+          expect(closeEnd).toEqual(true, 'Close end should fire after close animation');
 
           done();
         }, 400);
@@ -102,11 +105,11 @@ describe("Sidenav Plugin", function () {
     it("should destroy correctly", function (done) {
       expect(M.Sidenav._sidenavs.length).toEqual(0, 'no sidenavs initialized');
       let sidenav = M.Sidenav.init(document.querySelector("#slide-out"));
-      let overlay = sidenav._overlay;
-      let dragTarget = sidenav.dragTarget;
+      var overlay = sidenav._overlay;
+      var dragTarget = sidenav.dragTarget;
       expect(M.Sidenav._sidenavs.length).toEqual(1, 'one sidenav initialized');
-      expect(document.contains(overlay)).toBeTrue('overlay should be in DOM');
-      expect(document.contains(dragTarget)).toBeTrue('dragTarget should be in DOM');
+      expect(document.contains(overlay)).toEqual(true, 'overlay should be in DOM');
+      expect(document.contains(dragTarget)).toEqual(true, 'dragTarget should be in DOM');
       sidenav.destroy();
 
 

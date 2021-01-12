@@ -1,5 +1,5 @@
 describe( 'Materialbox:', function() {
-  let transformMaterialbox;
+  var transformMaterialbox;
 
   beforeEach(async function() {
     await XloadFixtures(['materialbox/materialboxFixture.html']);
@@ -21,8 +21,8 @@ describe( 'Materialbox:', function() {
         let overlayRect = overlay.getBoundingClientRect();
         let windowWidth = window.innerWidth;
         let windowHeight = window.innerHeight;
-        expect(overlay).toExist('because it is generated on init'); //TODO replace with alternative for deprecated jasmine-jquery
-        expect(overlay).toBeVisible('because materialbox was clicked'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(overlay).toExist('because it is generated on init');
+        expect(overlay).toBeVisible('because materialbox was clicked');
         expect(overlayRect.top).toEqual(0);
         expect(overlayRect.left).toEqual(0);
         expect(overlayRect.width).toEqual(windowWidth);

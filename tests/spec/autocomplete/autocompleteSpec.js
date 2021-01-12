@@ -19,15 +19,19 @@ describe("Autocomplete Plugin", function () {
   });
 
   describe("Autocomplete", function () {
+    // let browserSelect, normalInput, normalDropdown;
+
+    // beforeEach(function() {
+    //   browserSelect = $('select.normal');
+    // });
 
     it("should work with multiple initializations", function (done) {
       let normal = document.querySelector('#normal-autocomplete');
-      let limited = M.Autocomplete.getInstance(normal);
       setTimeout(function() {
-        limited.updateData({ "hi": null });
-        limited.updateData({ "hi": null });
-        limited.updateData({ "hi": null });
-        limited.updateData({
+        M.Autocomplete.init(normal, { "hi": null });
+        M.Autocomplete.init(normal, { "hi": null });
+        M.Autocomplete.init(normal, { "hi": null });
+        M.Autocomplete.init(normal, {
           data: {
             "Apple": null,
             "Microsoft": null,
@@ -54,7 +58,7 @@ describe("Autocomplete Plugin", function () {
       limitedInstance.updateData(data);
       limitedInstance.options.limit = 20;
 
-      limited.focus();
+      focus(limited);
       limited.value = 'a';
       keyup(limited, 65);
 
@@ -70,17 +74,17 @@ describe("Autocomplete Plugin", function () {
       let normal = document.querySelector('#normal-autocomplete');
       let autocompleteEl = normal.parentNode.querySelector('.autocomplete-content');
 
-      normal.focus();
+      focus(normal);
       normal.value = 'e';
       keyup(normal, 69);
 
-      setTimeout(function () {
+      setTimeout(function() {
         expect(autocompleteEl.children.length).toEqual(2, 'Results should show dropdown on text input');
         done();
       }, 200);
     });
 
-    it("should open correctly from keyboard focus", function (done) {
+  it("should open correctly from keyboard focus", function (done) {
       let normal = document.querySelector('#normal-autocomplete');
       let autocompleteEl = normal.parentNode. querySelector('.autocomplete-content');
 
@@ -88,7 +92,7 @@ describe("Autocomplete Plugin", function () {
       keyup(normal, 9);
       focus(normal);
 
-      setTimeout(function () {
+      setTimeout(function() {
         expect(autocompleteEl.children.length).toEqual(2, 'Results should show dropdown on text input');
         done();
       }, 200);

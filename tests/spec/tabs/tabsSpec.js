@@ -1,23 +1,29 @@
 describe("Tabs Plugin", function () {
+  
+  beforeEach(async function() {
+    await XloadFixtures(['tabs/tabsFixture.html']);
+    let normalTabs = document.querySelector('.tabs.normal');
+    M.Tabs.init(normalTabs, {});
+    window.location.hash = "";
+    //HACK the tabs init function not fully initializing. it restores state even after element has been removed from DOM, even after using tabInstance.destroy()
+    M.Tabs.getInstance(normalTabs).select('test2');
+  });
+  afterEach(function(){
+    XunloadFixtures();
+  });
 
   describe("Tabs", function () {
     var normalTabs;
-    beforeEach(async function() {
-      await XloadFixtures(['tabs/tabsFixture.html']);
+
+    beforeEach(function() {
       normalTabs = document.querySelector('.tabs.normal');
-      M.Tabs.init(normalTabs, {});
       window.location.hash = "";
-      //HACK the tabs init function not fully initializing. it restores state even after element has been removed from DOM, even after using tabInstance.destroy()
-      M.Tabs.getInstance(normalTabs).select('test2');
-    });
-    afterEach(function(){
-      XunloadFixtures();
     });
 
     it("should open to active tab", function () {
-      const activeTab = normalTabs.querySelector('.active');
-      const activeTabHash = activeTab.getAttribute('href');
-      const tabLinks = normalTabs.querySelectorAll('.tab a');
+      let activeTab = normalTabs.querySelector('.active');
+      let activeTabHash = activeTab.getAttribute('href');
+      let tabLinks = normalTabs.querySelectorAll('.tab a');
       for (let i = 0; i < tabLinks.length; i++) {
         let tabHash = tabLinks[i].getAttribute('href');
         if (tabHash === activeTabHash) {
@@ -27,21 +33,21 @@ describe("Tabs Plugin", function () {
         }
       }
 
-      let indicator = normalTabs.querySelector('.indicator');
-      expect(indicator).toExist('Indicator should be generated'); //TODO replace with alternative for deprecated jasmine-jquery
+      var indicator = normalTabs.querySelector('.indicator');
+      expect(indicator).toExist('Indicator should be generated');
       // expect(Math.abs(indicator.offset().left - activeTab.offset().left)).toBeLessThan(1, 'Indicator should be at active tab by default.');
     });
 
     it("should switch to clicked tab", function (done) {
-      const activeTab = normalTabs.querySelector('.active');
-      const activeTabHash = activeTab.getAttribute('href');
-      const disabledTab = normalTabs.querySelector('.disabled a');
-      const disabledTabHash = disabledTab.getAttribute('href');
-      const firstTab = normalTabs.querySelector('.tab a');
-      const firstTabHash = firstTab.getAttribute('href');
-      const indicator = normalTabs.querySelector('.indicator');
+      let activeTab = normalTabs.querySelector('.active');
+      let activeTabHash = activeTab.getAttribute('href');
+      let disabledTab = normalTabs.querySelector('.disabled a');
+      let disabledTabHash = disabledTab.getAttribute('href');
+      let firstTab = normalTabs.querySelector('.tab a');
+      let firstTabHash = firstTab.getAttribute('href');
+      let indicator = normalTabs.querySelector('.indicator');
 
-      expect(indicator).toExist('Indicator should be generated'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(indicator).toExist('Indicator should be generated');
       // expect(Math.abs(indicator.offset().left - activeTab.offset().left)).toBeLessThan(1, 'Indicator should be at active tab by default.');
 
       click(disabledTab);
@@ -63,16 +69,16 @@ describe("Tabs Plugin", function () {
     });
 
     it("shouldn't hide active tab if clicked while active", function (done) {
-      const activeTab = normalTabs.querySelector('.active');
-      const activeTabHash = activeTab.getAttribute('href');
-      const indicator = normalTabs.querySelector('.indicator');
+      let activeTab = normalTabs.querySelector('.active');
+      let activeTabHash = activeTab.getAttribute('href');
+      let indicator = normalTabs.querySelector('.indicator');
 
-      expect(indicator).toExist('Indicator should be generated'); //TODO replace with alternative for deprecated jasmine-jquery
+      expect(indicator).toExist('Indicator should be generated');
 
       click(activeTab);
 
       setTimeout(function() {
-        expect(document.querySelector(activeTabHash)).toBeVisible('Clicking active tab while active should not hide it.'); //TODO replace with alternative for deprecated jasmine-jquery
+        expect(document.querySelector(activeTabHash)).toBeVisible('Clicking active tab while active should not hide it.');
         done();
       }, 400);
     });
@@ -81,7 +87,7 @@ describe("Tabs Plugin", function () {
     it("should horizontally scroll when too many tabs", function (done) {
       let tabsScrollWidth = 0;
       normalTabs.style.width = '400px';
-      const tabs = normalTabs.querySelectorAll('.tab');
+      let tabs = normalTabs.querySelectorAll('.tab');
       for (let i = 0; i < tabs.length; i++) {
         setTimeout(function() {
           tabsScrollWidth += tabs[i].offsetWidth;
@@ -95,15 +101,15 @@ describe("Tabs Plugin", function () {
     });
 
     it("should programmatically switch tabs", function (done) {
-      const activeTab = normalTabs.querySelector('.active');
-      const activeTabHash = activeTab.getAttribute('href');
-      const firstTab = normalTabs.querySelector('li a');
-      const firstTabHash = firstTab.getAttribute('href');
-      const indicator = normalTabs.querySelector('.indicator');
+      let activeTab = normalTabs.querySelector('.active');
+      let activeTabHash = activeTab.getAttribute('href');
+      let firstTab = normalTabs.querySelector('li a');
+      let firstTabHash = firstTab.getAttribute('href');
+      let indicator = normalTabs.querySelector('.indicator');
 
-      const tabs = normalTabs.querySelectorAll('.tab a');
+      let tabs = normalTabs.querySelectorAll('.tab a');
       for (let i = 0; i < tabs.length; i++) {
-        const tabHash = tabs[i].getAttribute('href');
+        let tabHash = tabs[i].getAttribute('href');
         if (tabHash === activeTabHash) {
           expect(document.querySelector(tabHash)).toBeVisible('active tab content should be visible by default'); //TODO replace with alternative for deprecated jasmine-jquery
         } else {
@@ -123,12 +129,12 @@ describe("Tabs Plugin", function () {
 
     it("shouldn't error if tab has no associated content", function (done) {
       document.querySelector('#test8').remove();
-      const tabNoContent = document.querySelector('[href="#test8"]');
-      expect(tabNoContent.classList.contains('active')).toBeFalse('Tab should not be selected');
+      let tabNoContent = document.querySelector('[href="#test8"]');
+      expect(tabNoContent).toNotHaveClass('active', 'Tab should not be selected');
       click(tabNoContent);
 
       setTimeout(function() {
-        expect(tabNoContent.classList.contains('active')).toBeTrue('Tab should be selected even with no content');
+        expect(tabNoContent).toHaveClass('active', 'Tab should be selected even with no content');
         done();
       }, 400);
     });

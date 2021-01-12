@@ -1,6 +1,6 @@
 const fixturesCache = {};
 const containerId = 'xjasmine-fixtures';
-const fixturesPath = 'http://localhost:8000/tests/spec';
+const fixturesPath = 'http://localhost:9001/tests/spec';
 
 async function XloadFixtures(fixtureUrls) {
   // console.log(JSON.stringify(fixturesCache))

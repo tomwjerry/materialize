@@ -1,23 +1,24 @@
 describe( 'Toasts:', function() {
-  const toastOutDuration = 375;
-  const toastInDuration = 300;
+  var toastOutDuration = 375;
+  var toastInDuration = 300;
+  var toast;
 
   describe('Toast javascript functions', function() {
     // Toast out animation duration does not count as part of its timer.
     it('should display and remove a toast', function(done) {
-      M.toast({html: 'Test toast', displayLength: toastInDuration, classes: 'toast-id-2'});
+      M.toast({html: 'Test toast', displayLength: toastInDuration});
 
       setTimeout(function() {
-        let toast = document.querySelectorAll('.toast-id-2');
+        toast = document.querySelectorAll('.toast');
         expect(toast.length).toBe(1);
-        expect(toast[0]).toBeVisible(); //TODO replace with alternative for deprecated jasmine-jqueryv
+        expect(toast[0]).toBeVisible();
         expect(toast[0].innerText).toBe('Test toast');
         setTimeout(function() {
-          let toast = document.querySelectorAll('.toast-id-2');
-          expect(toast[0]).toBeVisible(); //TODO replace with alternative for deprecated jasmine-jquery
+          toast = document.querySelectorAll('.toast');
+          expect(toast[0]).toBeVisible();
           expect(toast.length).toBe(1, 'because toast duration still on going');
           setTimeout(function() {
-            let toast = document.querySelectorAll('.toast-id-2');
+            toast = document.querySelectorAll('.toast');
             expect(toast.length).toBe(0, 'because toast should be removed by now');
             done();
           }, toastOutDuration + 90); // .1s leeway is given
@@ -28,9 +29,8 @@ describe( 'Toasts:', function() {
     it('Opens a toast with HTML content', function() {
       let toastContent = document.createElement("span");
       toastContent.innerText = 'I am toast content';
-      //Use custom class to identify toast so it's not confused by previous test toasts still hanging around.
-      M.toast({html: toastContent, displayLength: 400, classes: 'toast-id-1'});
-      let toastSpan = document.querySelector('.toast-id-1');
+      M.toast({html: toastContent.outerHTML, displayLength: 400});
+      let toastSpan = document.querySelector('.toast span');
       expect(toastSpan.innerText).toBe('I am toast content');
       expect(toastSpan.innerText).not.toBe('I am toast');
     });
@@ -42,7 +42,8 @@ describe( 'Toasts:', function() {
       };
       M.toast({html: 'I am a toast', displayLength:100, completeCallback: callback});
       setTimeout(function() {
-        expect(boolObj.wasCalled).toBeTruthy('because the callback set it to true');
+        expect(boolObj.wasCalled).toBe(true,
+                                       'because the callback set it to true');
         done();
       }, 500);
     });
@@ -55,5 +56,6 @@ describe( 'Toasts:', function() {
     });
 
   });
+
 
 });
